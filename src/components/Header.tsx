@@ -21,7 +21,7 @@ export default function Header() {
           className="inline-flex items-center gap-2 text-warm-800 dark:text-dark-100 font-bold text-lg shrink-0"
         >
           <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-md">
-            <img src="logo2.webp" alt="" className="w-6 h-6 object-contain" />
+            <img src="/logo2.webp" alt="" className="w-6 h-6 object-contain" />
           </span>
           LangPal
         </Link>
