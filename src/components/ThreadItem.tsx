@@ -1,27 +1,22 @@
+import { Link } from 'react-router-dom';
 import type { Thread } from '../types/chat';
+import { chatPathForPal } from '../features/chat/useActiveThread';
 import Avatar from './Avatar';
 import { countryCodeToFlag } from '../utils/localisation';
 
 interface ThreadItemProps {
   thread: Thread;
   isActive: boolean;
-  onSelect: () => void;
+  onSelect?: () => void;
 }
 
 export default function ThreadItem({ thread, isActive, onSelect }: ThreadItemProps) {
   return (
-    <div
-      role="button"
-      tabIndex={0}
+    <Link
+      to={chatPathForPal(thread.palId)}
       onClick={onSelect}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onSelect();
-        }
-      }}
-      aria-current={isActive}
-      className={`thread-item group flex items-center gap-3 px-3 py-3 rounded-r-xl cursor-pointer border-l-4 ${
+      aria-current={isActive ? 'page' : undefined}
+      className={`thread-item group flex items-center gap-3 px-3 py-3 rounded-r-xl no-underline cursor-pointer border-l-4 ${
         isActive
           ? 'bg-indigo-50 dark:bg-indigo-900/30 border-indigo-500 dark:border-indigo-400 shadow-sm'
           : 'border-transparent hover:bg-warm-100 dark:hover:bg-dark-800'
@@ -32,7 +27,7 @@ export default function ThreadItem({ thread, isActive, onSelect }: ThreadItemPro
         <div className="flex justify-between items-baseline">
           <span className="font-semibold text-sm text-warm-800 dark:text-dark-100 truncate flex items-center gap-1">
             {thread.name.length > 15 ? thread.name.slice(0, 15) + '...' : thread.name}
-       
+
             {thread.palCountry && (
               <span title={thread.palCountry} className="ml-1 text-base align-middle">
                 {countryCodeToFlag(thread.palCountry)}
@@ -54,6 +49,6 @@ export default function ThreadItem({ thread, isActive, onSelect }: ThreadItemPro
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

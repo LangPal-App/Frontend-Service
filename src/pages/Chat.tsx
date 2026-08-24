@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ChatWindow from '../components/ChatWindow';
-import { useSyncChatPalRoute } from '../features/chat/useSyncChatPalRoute';
 
 export default function Chat() {
-  useSyncChatPalRoute();
+  const { palId } = useParams<{ palId?: string }>();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ export default function Chat() {
 
       <div className="flex flex-1 overflow-hidden relative">
         <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <ChatWindow />
+        <ChatWindow key={palId ?? 'none'} />
       </div>
     </div>
   );

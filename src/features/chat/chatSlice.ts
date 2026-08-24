@@ -4,7 +4,6 @@ import type {
   ChatMessage,
   ChatSummary,
   MessagesPagination,
-  Pal,
 } from '../../api/types';
 import type { ChatState } from '../../types/chat';
 import { logout } from '../auth/authSlice';
@@ -48,16 +47,6 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    setActiveChat(state, action: PayloadAction<string>) {
-      state.activeChatId = action.payload;
-      state.pendingPal = null;
-      state.error = null;
-    },
-    startChatWithPal(state, action: PayloadAction<Pal>) {
-      state.pendingPal = action.payload;
-      state.activeChatId = null;
-      state.error = null;
-    },
     clearChatError(state) {
       state.error = null;
     },
@@ -71,23 +60,31 @@ const chatSlice = createSlice({
       state.streamingByChatId[action.payload.key] = '';
     },
     applyChatEvent(state, action: PayloadAction<ChatSummary>) {
-      const pending = state.messagesByChatId[PENDING_CHAT_ID];
-      const pendingStream = state.streamingByChatId[PENDING_CHAT_ID];
-      const pendingOptimistic = state.optimisticUserByChatId[PENDING_CHAT_ID];
+      const pendingKey = pendingChatKey(action.payload.palId);
+      const pending =
+        state.messagesByChatId[pendingKey] ?? state.messagesByChatId[PENDING_CHAT_ID];
+      const pendingStream =
+        state.streamingByChatId[pendingKey] ?? state.streamingByChatId[PENDING_CHAT_ID];
+      const pendingOptimistic =
+        state.optimisticUserByChatId[pendingKey] ??
+        state.optimisticUserByChatId[PENDING_CHAT_ID];
 
       if (pending?.length) {
         state.messagesByChatId[action.payload.id] = [
           ...(state.messagesByChatId[action.payload.id] ?? []),
           ...pending,
         ];
+        delete state.messagesByChatId[pendingKey];
         delete state.messagesByChatId[PENDING_CHAT_ID];
       }
       if (pendingStream != null) {
         state.streamingByChatId[action.payload.id] = pendingStream;
+        delete state.streamingByChatId[pendingKey];
         delete state.streamingByChatId[PENDING_CHAT_ID];
       }
       if (pendingOptimistic) {
         state.optimisticUserByChatId[action.payload.id] = pendingOptimistic;
+        delete state.optimisticUserByChatId[pendingKey];
         delete state.optimisticUserByChatId[PENDING_CHAT_ID];
       }
 
@@ -123,9 +120,10 @@ const chatSlice = createSlice({
         text: string;
         chatKey?: string;
         messageId?: string;
+        palId?: string;
       }>
     ) {
-      const { text, chatKey, messageId } = action.payload;
+      const { text, chatKey, messageId, palId } = action.payload;
       state.status = 'failed';
       state.streamingByChatId = {};
 
@@ -138,7 +136,7 @@ const chatSlice = createSlice({
           }
           delete state.optimisticUserByChatId[chatKey];
         }
-        state.error = { chatKey, messageId, text };
+        state.error = { chatKey, messageId, text, palId };
         return;
       }
 
@@ -217,8 +215,6 @@ const chatSlice = createSlice({
 });
 
 export const {
-  setActiveChat,
-  startChatWithPal,
   clearChatError,
   streamStarted,
   applyChatEvent,
@@ -234,4 +230,12 @@ export const {
 } = chatSlice.actions;
 
 export { PENDING_CHAT_ID };
+
+export function pendingChatKey(palId: string) {
+  return `${PENDING_CHAT_ID}:${palId}`;
+}
+
+export function isPendingChatKey(chatKey: string) {
+  return chatKey === PENDING_CHAT_ID || chatKey.startsWith(`${PENDING_CHAT_ID}:`);
+}
 export default chatSlice.reducer;

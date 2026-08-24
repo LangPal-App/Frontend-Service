@@ -6,7 +6,7 @@ import { useGetMyPalsQuery, useGetPalsQuery } from '../api/palsApi';
 import type { Pal } from '../api/types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logoutUser } from '../features/auth/logoutUser';
-import { chatPathForPal } from '../features/chat/useSyncChatPalRoute';
+import { chatPathForPal } from '../features/chat/useActiveThread';
 import { formatMessageTime } from '../utils/datetime';
 import Avatar from './Avatar';
 import ThreadItem from './ThreadItem';
@@ -68,14 +68,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     };
   }, [myPals, publicPals, query]);
 
-  function handleOpenChat(palId: string) {
-    navigate(chatPathForPal(palId));
+  function handleThreadOpened() {
     setPickingPal(false);
     onClose?.();
-  }
-
-  function handleSelectPal(pal: Pal) {
-    handleOpenChat(pal.id);
   }
 
   function handleLogout() {
@@ -133,8 +128,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               {(myPalsLoading || publicPalsLoading) && (
                 <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">Loading pals…</p>
               )}
-              <PalGroup title="Your pals" pals={palSections.mine} onSelect={handleSelectPal} />
-              <PalGroup title="Discover" pals={palSections.discover} onSelect={handleSelectPal} />
+              <PalGroup title="Your pals" pals={palSections.mine} onOpened={handleThreadOpened} />
+              <PalGroup title="Discover" pals={palSections.discover} onOpened={handleThreadOpened} />
               {!myPalsLoading &&
                 !publicPalsLoading &&
                 palSections.mine.length === 0 &&
@@ -182,7 +177,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                       unread: 0,
                     }}
                     isActive={chat.palId === activePalId}
-                    onSelect={() => handleOpenChat(chat.palId)}
+                    onSelect={onClose}
                   />
                 );
               })}
@@ -249,11 +244,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 function PalGroup({
   title,
   pals,
-  onSelect,
+  onOpened,
 }: {
   title: string;
   pals: Pal[];
-  onSelect: (pal: Pal) => void;
+  onOpened?: () => void;
 }) {
   if (pals.length === 0) return null;
 
@@ -264,11 +259,11 @@ function PalGroup({
       </h3>
       <div className="space-y-1">
         {pals.map((pal) => (
-          <button
+          <Link
             key={pal.id}
-            type="button"
-            onClick={() => onSelect(pal)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-warm-100 dark:hover:bg-dark-800 transition"
+            to={chatPathForPal(pal.id)}
+            onClick={onOpened}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left no-underline hover:bg-warm-100 dark:hover:bg-dark-800 transition"
           >
             <Avatar name={pal.name} image={pal.image} className="w-10 h-10 text-sm flex-shrink-0" />
             <div className="min-w-0 flex-1">
@@ -277,7 +272,7 @@ function PalGroup({
                 {pal.language} · {pal.languageLevel} · {pal.description}
               </p>
             </div>
-          </button>
+          </Link>
         ))}
       </div>
     </section>

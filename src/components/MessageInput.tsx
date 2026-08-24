@@ -4,13 +4,17 @@ import { abortChatMessage, sendChatMessage } from '../features/chat/sendChatMess
 
 interface MessageInputProps {
   disabled?: boolean;
+  chatId?: string | null;
+  palId?: string | null;
 }
 
-export default function MessageInput({ disabled = false }: MessageInputProps) {
+export default function MessageInput({
+  disabled = false,
+  chatId,
+  palId,
+}: MessageInputProps) {
   const dispatch = useAppDispatch();
-  const canSend = useAppSelector(
-    (state) => Boolean(state.chat.activeChatId || state.chat.pendingPal)
-  );
+  const canSend = Boolean(chatId || palId);
   const isStreaming = useAppSelector((state) => state.chat.status === 'streaming');
   const [text, setText] = useState('');
 
@@ -21,7 +25,12 @@ export default function MessageInput({ disabled = false }: MessageInputProps) {
     if (isStreaming) return;
     const trimmed = text.trim();
     if (!trimmed || isDisabled) return;
-    void dispatch(sendChatMessage(trimmed));
+    void dispatch(
+      sendChatMessage(trimmed, {
+        chatId: chatId ?? undefined,
+        palId: chatId ? undefined : palId ?? undefined,
+      })
+    );
     setText('');
   }
 

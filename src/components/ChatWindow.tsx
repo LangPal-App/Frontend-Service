@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   useGetChatMessagesQuery,
-  useGetChatsQuery,
   useLazyGetChatMessagesQuery,
 } from '../api/chatsApi';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-  PENDING_CHAT_ID,
+  pendingChatKey,
   prependOlderChatMessages,
   setChatMessagesPage,
 } from '../features/chat/chatSlice';
 import { resendFailedMessage } from '../features/chat/sendChatMessage';
+import { useActiveThread } from '../features/chat/useActiveThread';
 import type { UiMessage } from '../types/chat';
 import { formatMessageTime } from '../utils/datetime';
 import Avatar from './Avatar';
@@ -20,8 +20,7 @@ import MessageInput from './MessageInput';
 export default function ChatWindow() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const activeChatId = useAppSelector((state) => state.chat.activeChatId);
-  const pendingPal = useAppSelector((state) => state.chat.pendingPal);
+  const { palId, chat, pal, chatId, isLoading: threadLoading } = useActiveThread();
   const messagesByChatId = useAppSelector((state) => state.chat.messagesByChatId);
   const messagesPaginationByChatId = useAppSelector(
     (state) => state.chat.messagesPaginationByChatId
@@ -31,26 +30,23 @@ export default function ChatWindow() {
   const status = useAppSelector((state) => state.chat.status);
   const error = useAppSelector((state) => state.chat.error);
 
-  const { data: chatsData } = useGetChatsQuery();
-  const chat = chatsData?.items?.find((item) => item.id === activeChatId);
-
   const {
-    data: initialMessages,
+    currentData: initialMessages,
     isFetching: isFetchingInitialMessages,
     isError: initialMessagesError,
   } = useGetChatMessagesQuery(
-    { chatId: activeChatId ?? '', page: 1 },
-    { skip: !activeChatId }
+    { chatId: chatId ?? '', page: 1 },
+    { skip: !chatId }
   );
 
   const [fetchOlderMessages, { isFetching: isFetchingOlderMessages }] =
     useLazyGetChatMessagesQuery();
 
   useEffect(() => {
-    if (!activeChatId || !initialMessages) return;
+    if (!chatId || !initialMessages) return;
     dispatch(
       setChatMessagesPage({
-        chatId: activeChatId,
+        chatId,
         messages: initialMessages.messages,
         pagination: {
           page: initialMessages.meta.page,
@@ -58,17 +54,17 @@ export default function ChatWindow() {
         },
       })
     );
-  }, [activeChatId, dispatch, initialMessages]);
+  }, [chatId, dispatch, initialMessages]);
 
-  const palName = chat?.palName ?? pendingPal?.name;
-  const palImage = chat?.palImage ?? pendingPal?.image ?? null;
-  const palLanguage = pendingPal
-    ? `${pendingPal.language} · ${pendingPal.languageLevel}`
+  const palName = chat?.palName ?? pal?.name;
+  const palImage = chat?.palImage ?? pal?.image ?? null;
+  const palLanguage = pal
+    ? `${pal.language} · ${pal.languageLevel}`
     : chat
       ? 'Language partner'
       : null;
 
-  const chatKey = activeChatId ?? (pendingPal ? PENDING_CHAT_ID : null);
+  const chatKey = chatId ?? (palId ? pendingChatKey(palId) : null);
 
   const messages = useMemo((): UiMessage[] => {
     if (!chatKey) return [];
@@ -140,12 +136,12 @@ export default function ChatWindow() {
   const shouldStickToBottomRef = useRef(true);
   const pendingScrollRestoreRef = useRef<{ height: number; top: number } | null>(null);
 
-  const pagination = activeChatId ? messagesPaginationByChatId[activeChatId] : undefined;
+  const pagination = chatId ? messagesPaginationByChatId[chatId] : undefined;
   const hasOlderMessages =
     Boolean(pagination) && pagination!.page < pagination!.totalPages;
   const historyLoaded = Boolean(pagination);
   const showNoMoreMessages =
-    Boolean(activeChatId) && historyLoaded && !hasOlderMessages && messages.length > 0;
+    Boolean(chatId) && historyLoaded && !hasOlderMessages && messages.length > 0;
 
   const handleScroll = useCallback(() => {
     const node = scrollRef.current;
@@ -155,7 +151,7 @@ export default function ChatWindow() {
   }, []);
 
   const handleLoadOlderMessages = useCallback(async () => {
-    if (!activeChatId || !pagination || !hasOlderMessages || isFetchingOlderMessages) {
+    if (!chatId || !pagination || !hasOlderMessages || isFetchingOlderMessages) {
       return;
     }
 
@@ -168,11 +164,11 @@ export default function ChatWindow() {
     }
 
     const nextPage = pagination.page + 1;
-    const result = await fetchOlderMessages({ chatId: activeChatId, page: nextPage });
+    const result = await fetchOlderMessages({ chatId, page: nextPage });
     if (result.data) {
       dispatch(
         prependOlderChatMessages({
-          chatId: activeChatId,
+          chatId,
           messages: result.data.messages,
           pagination: {
             page: result.data.meta.page,
@@ -182,7 +178,7 @@ export default function ChatWindow() {
       );
     }
   }, [
-    activeChatId,
+    chatId,
     dispatch,
     fetchOlderMessages,
     hasOlderMessages,
@@ -213,10 +209,18 @@ export default function ChatWindow() {
     }
   }, [messages]);
 
-  if (!palName) {
+  if (!palId) {
     return (
       <main className="flex-1 flex items-center justify-center text-warm-500 dark:text-dark-400 bg-warm-50 dark:bg-dark-950 px-6 text-center">
         <p>Pick a pal from the sidebar to start a conversation.</p>
+      </main>
+    );
+  }
+
+  if (!palName) {
+    return (
+      <main className="flex-1 flex items-center justify-center text-warm-500 dark:text-dark-400 bg-warm-50 dark:bg-dark-950 px-6 text-center">
+        <p>{threadLoading ? 'Loading chat…' : 'This pal could not be found.'}</p>
       </main>
     );
   }
@@ -246,7 +250,7 @@ export default function ChatWindow() {
         onScroll={handleScroll}
         className="flex-1 overflow-y-auto custom-scroll px-4 sm:px-6 py-5 space-y-5 bg-warm-100/50 dark:bg-dark-900/50"
       >
-        {activeChatId && (
+        {chatId && (
           <div className="flex justify-center pb-1">
             {hasOlderMessages ? (
               <button
@@ -298,7 +302,7 @@ export default function ChatWindow() {
         )}
       </div>
 
-      <MessageInput />
+      <MessageInput chatId={chatId} palId={palId} />
     </main>
   );
 }

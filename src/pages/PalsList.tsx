@@ -8,7 +8,7 @@ import {
 import { getErrorMessage } from '../api/errors';
 import Avatar from '../components/Avatar';
 import PageHeader from '../components/PageHeader';
-import { chatPathForPal } from '../features/chat/useSyncChatPalRoute';
+import { chatPathForPal } from '../features/chat/useActiveThread';
 import { useAppSelector } from '../app/hooks';
 
 type Tab = 'mine' | 'discover';

@@ -5,11 +5,12 @@ import { getErrorMessage } from '../../api/errors';
 import type { ChatMessage } from '../../api/types';
 import type { AppDispatch, RootState } from '../../app/store';
 import {
-  PENDING_CHAT_ID,
   appendDelta,
   applyChatEvent,
   discardFailedMessage,
   finishPalMessage,
+  isPendingChatKey,
+  pendingChatKey,
   streamAborted,
   streamFailed,
   streamIdle,
@@ -19,6 +20,12 @@ import {
 
 let activeAbortController: AbortController | null = null;
 let activeStreamId: string | null = null;
+let activeStreamChatKey: string | null = null;
+
+export interface SendChatTarget {
+  chatId?: string;
+  palId?: string;
+}
 
 function isAbortError(error: unknown): boolean {
   return (
@@ -27,21 +34,18 @@ function isAbortError(error: unknown): boolean {
   );
 }
 
-function currentChatKey(state: RootState): string | null {
-  return state.chat.activeChatId ?? (state.chat.pendingPal ? PENDING_CHAT_ID : null);
-}
-
 export function abortChatMessage() {
   return (dispatch: AppDispatch, getState: () => RootState) => {
     if (!activeAbortController) return;
 
     const state = getState();
-    const chatKey = currentChatKey(state);
+    const chatKey = activeStreamChatKey;
     const streamId = activeStreamId;
 
     activeAbortController.abort();
     activeAbortController = null;
     activeStreamId = null;
+    activeStreamChatKey = null;
 
     if (streamId && chatKey && state.chat.status === 'streaming') {
       dispatch(streamAborted({ chatKey }));
@@ -67,11 +71,16 @@ export function resendFailedMessage(messageId: string) {
 
     const text = message.message;
     dispatch(discardFailedMessage({ chatKey, messageId }));
-    void dispatch(sendChatMessage(text));
+    void dispatch(
+      sendChatMessage(text, {
+        chatId: isPendingChatKey(chatKey) ? undefined : chatKey,
+        palId: error.palId,
+      })
+    );
   };
 }
 
-export function sendChatMessage(text: string) {
+export function sendChatMessage(text: string, target: SendChatTarget = {}) {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     const trimmed = text.trim();
     if (!trimmed) return;
@@ -85,14 +94,14 @@ export function sendChatMessage(text: string) {
       return;
     }
 
-    const chatId = state.chat.activeChatId ?? undefined;
-    const palId = state.chat.pendingPal?.id;
+    const chatId = target.chatId;
+    const palId = target.palId;
     if (!chatId && !palId) {
       dispatch(streamFailed({ text: 'Pick a pal or a chat first.' }));
       return;
     }
 
-    const chatKey = chatId ?? PENDING_CHAT_ID;
+    const chatKey = chatId ?? pendingChatKey(palId!);
     const optimistic: ChatMessage = {
       id: `temp-${nanoid()}`,
       message: trimmed,
@@ -105,6 +114,7 @@ export function sendChatMessage(text: string) {
     const abortController = new AbortController();
     activeAbortController = abortController;
     activeStreamId = streamId;
+    activeStreamChatKey = chatKey;
 
     dispatch(streamStarted({ key: chatKey, optimistic }));
 
@@ -122,6 +132,7 @@ export function sendChatMessage(text: string) {
           onChat(chat) {
             if (activeStreamId !== streamId) return;
             resolvedChatId = chat.id;
+            activeStreamChatKey = chat.id;
             dispatch(applyChatEvent(chat));
             dispatch(
               chatsApi.util.updateQueryData('getChats', undefined, (draft) => {
@@ -136,7 +147,7 @@ export function sendChatMessage(text: string) {
             userMessageId = message.id;
             dispatch(
               upsertMessage({
-                chatKey: resolvedChatId ?? PENDING_CHAT_ID,
+                chatKey: resolvedChatId ?? chatKey,
                 message,
               })
             );
@@ -145,7 +156,7 @@ export function sendChatMessage(text: string) {
             if (activeStreamId !== streamId) return;
             dispatch(
               appendDelta({
-                chatKey: resolvedChatId ?? PENDING_CHAT_ID,
+                chatKey: resolvedChatId ?? chatKey,
                 content,
               })
             );
@@ -154,7 +165,7 @@ export function sendChatMessage(text: string) {
             if (activeStreamId !== streamId) return;
             dispatch(
               finishPalMessage({
-                chatKey: resolvedChatId ?? PENDING_CHAT_ID,
+                chatKey: resolvedChatId ?? chatKey,
                 message: palMessage,
               })
             );
@@ -177,12 +188,14 @@ export function sendChatMessage(text: string) {
 
       activeAbortController = null;
       activeStreamId = null;
+      activeStreamChatKey = null;
       dispatch(streamIdle());
     } catch (error) {
       if (activeStreamId !== streamId) return;
 
       activeAbortController = null;
       activeStreamId = null;
+      activeStreamChatKey = null;
 
       if (isAbortError(error) || abortController.signal.aborted) {
         dispatch(
@@ -197,6 +210,7 @@ export function sendChatMessage(text: string) {
         streamFailed({
           chatKey: resolvedChatId ?? chatKey,
           messageId: userMessageId,
+          palId,
           text: getErrorMessage(error, 'Could not get a reply for that message.'),
         })
       );

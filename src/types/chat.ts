@@ -4,6 +4,7 @@ export interface ChatSendError {
   chatKey: string;
   messageId: string;
   text: string;
+  palId?: string;
 }
 
 export interface ChatState {
