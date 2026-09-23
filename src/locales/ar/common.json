@@ -1,0 +1,23 @@
+{
+  "dir": "rtl",
+  "brand": "LangPal",
+  "nav": {
+    "main": "القائمة",
+    "pals": "الرفاق",
+    "settings": "الإعدادات",
+    "logIn": "تسجيل الدخول",
+    "getStarted": "ابدأ الآن"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية"
+  },
+  "theme": {
+    "toggle": "تبديل المظهر"
+  },
+  "back": {
+    "home": "الرئيسية",
+    "chat": "المحادثة",
+    "pals": "الرفاق"
+  }
+}

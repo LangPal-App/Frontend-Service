@@ -1,0 +1,33 @@
+{
+  "title": "Settings",
+  "navLabel": "Settings",
+  "profile": {
+    "nav": "Profile",
+    "title": "Profile",
+    "subtitle": "Update your display name and profile photo.",
+    "you": "You",
+    "photo": "Profile photo",
+    "displayName": "Display name",
+    "namePlaceholder": "Your name",
+    "nameRequired": "Name is required.",
+    "error": "Could not update profile.",
+    "success": "Profile updated successfully.",
+    "saving": "Saving…",
+    "save": "Save profile"
+  },
+  "password": {
+    "nav": "Password",
+    "title": "Password",
+    "subtitle": "Choose a strong password with at least 6 characters.",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "currentRequired": "Enter your current password.",
+    "minLength": "Must be at least 6 characters.",
+    "mismatch": "Passwords do not match.",
+    "error": "Could not update password.",
+    "success": "Password updated successfully.",
+    "updating": "Updating…",
+    "update": "Update password"
+  }
+}

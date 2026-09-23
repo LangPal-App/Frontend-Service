@@ -1,0 +1,33 @@
+{
+  "logoAlt": "LangPal Logo",
+  "badge": "AI-powered language practice",
+  "headlineBefore": "Learn languages through",
+  "headlineHighlight": "real conversation",
+  "subtitle": "Meet your language pals — AI partners who adapt to your level, keep you talking, and make practice feel natural.",
+  "ctaStart": "Start for free",
+  "ctaAccount": "I have an account",
+  "featuresTitle": "Everything you need to keep talking",
+  "features": {
+    "practice": {
+      "title": "Practice any language",
+      "description": "Chat with AI pals tailored to your target language, level, and cultural context."
+    },
+    "build": {
+      "title": "Build your own pals",
+      "description": "Create custom conversation partners with unique personalities, accents, and teaching styles."
+    },
+    "realtime": {
+      "title": "Real-time conversations",
+      "description": "Stream responses instantly — no waiting around. Learn through natural back-and-forth dialogue."
+    }
+  },
+  "languagesLabel": "Practice in any language",
+  "languagesMore": "+ many more",
+  "footerTagline": "© {{year}} LangPal. Conversation, uncluttered.",
+  "footerCta": "Create your free account",
+  "demoPals": {
+    "sofia": "🇪🇸 Spanish",
+    "kenji": "🇯🇵 Japanese",
+    "amelie": "🇫🇷 French"
+  }
+}
