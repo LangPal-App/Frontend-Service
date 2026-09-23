@@ -1,7 +1,7 @@
 export interface ApiEnvelope<T> {
   message: string;
   data: T;
-  errors: string[];
+  errors: string[] | { [key: string]: string };
   meta?: PaginationMeta;
 }
 

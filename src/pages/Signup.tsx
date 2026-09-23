@@ -17,6 +17,7 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [touched, setTouched] = useState(false);
   const [register, { isLoading, error }] = useRegisterMutation();
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
   if (isAuthenticated) {
     return <Navigate to="/chat" replace />;
@@ -44,8 +45,8 @@ export default function Signup() {
       }).unwrap();
       dispatch(setPendingEmail(email.trim()));
       navigate('/verify-otp', { replace: true, state: { email: email.trim() } });
-    } catch {
-      // Hook `error` is shown below.
+    } catch (e: any) {
+      setFieldErrors(e?.data?.errors ?? {});
     }
   }
 
@@ -77,6 +78,12 @@ export default function Signup() {
                   className="w-full pl-9 pr-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
                 />
               </div>
+              {fieldErrors?.name && (
+                <div className="mt-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-medium mb-2 flex items-center gap-2">
+                  <i className="fas fa-exclamation-circle" aria-hidden="true" />
+                  {fieldErrors.name[0]}
+                </div>
+              )}
               {touched && !name.trim() && (
                 <span className="block mt-1 text-xs text-red-500">Enter your name.</span>
               )}
@@ -100,6 +107,12 @@ export default function Signup() {
                   className="w-full pl-9 pr-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
                 />
               </div>
+              {fieldErrors?.username && (
+                <div className="mt-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-medium mb-2 flex items-center gap-2">
+                  <i className="fas fa-exclamation-circle" aria-hidden="true" />
+                  {fieldErrors.username[0]}
+                </div>
+              )}
               {touched && !username.trim() && (
                 <span className="block mt-1 text-xs text-red-500">Choose a username.</span>
               )}
@@ -123,6 +136,12 @@ export default function Signup() {
                   className="w-full pl-9 pr-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
                 />
               </div>
+              {fieldErrors?.email && (
+                <div className="mt-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-medium mb-2 flex items-center gap-2">
+                  <i className="fas fa-exclamation-circle" aria-hidden="true" />
+                  {fieldErrors.email[0]}
+                </div>
+              )}
               {touched && !email.trim() && (
                 <span className="block mt-1 text-xs text-red-500">Enter your email.</span>
               )}
@@ -146,6 +165,12 @@ export default function Signup() {
                   className="w-full pl-9 pr-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
                 />
               </div>
+              {fieldErrors?.password && (
+                <div className="mt-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-medium mb-2 flex items-center gap-2">
+                  <i className="fas fa-exclamation-circle" aria-hidden="true" />
+                  {fieldErrors.password[0]}
+                </div>
+              )}
               {touched && password.length > 0 && password.length < 6 && (
                 <span className="block mt-1 text-xs text-red-500">Use at least 6 characters.</span>
               )}
@@ -169,12 +194,18 @@ export default function Signup() {
                   className="w-full pl-9 pr-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
                 />
               </div>
+              {fieldErrors?.confirmPassword && (
+                <div className="mt-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-medium mb-2 flex items-center gap-2">
+                  <i className="fas fa-exclamation-circle" aria-hidden="true" />
+                  {fieldErrors.confirmPassword[0]}
+                </div>
+              )}
               {touched && confirmPassword.length > 0 && !passwordsMatch && (
                 <span className="block mt-1 text-xs text-red-500">Passwords don't match.</span>
               )}
             </label>
 
-            {error as string  && (
+            {error as string && (
               <p className="px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">
                 {getErrorMessage(error, 'Could not create your account.')}
               </p>
