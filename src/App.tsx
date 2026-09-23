@@ -14,6 +14,8 @@ import PalsList from './pages/PalsList';
 import PalForm from './pages/PalForm';
 import UpdateProfile from './pages/UpdateProfile';
 import UpdatePassword from './pages/UpdatePassword';
+import SetLanguage from './pages/SetLanguage';
+import { SUPPORTED_LANGUAGES } from './i18n/languages';
 
 export default function App() {
   const isDark = useAppSelector((state) => state.theme.isDark);
@@ -85,6 +87,9 @@ export default function App() {
               <Route path="profile" element={<UpdateProfile />} />
               <Route path="password" element={<UpdatePassword />} />
             </Route>
+
+            <Route path="/:lang" element={<SetLanguage />} />
+
             <Route path="*" element={<Home />} />
           </Routes>
         </div>
