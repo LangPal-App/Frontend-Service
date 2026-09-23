@@ -15,7 +15,7 @@ export default function PageHeader({ backTo = '/', backLabel = 'Home', title }: 
             to={backTo}
             className="inline-flex items-center gap-1.5 text-sm text-warm-500 dark:text-dark-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition shrink-0"
           >
-            <i className="fas fa-arrow-left text-xs" aria-hidden="true" />
+            <i className="fas fa-arrow-left text-xs rtl:rotate-180" aria-hidden="true" />
             {backLabel}
           </Link>
           {title && (

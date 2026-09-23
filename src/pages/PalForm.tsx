@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   useCreatePalMutation,
   useGetMyPalsQuery,
@@ -32,6 +33,7 @@ const emptyForm: CreatePalRequest = {
 };
 
 export default function PalForm() {
+  const { t } = useTranslation(['pals', 'common']);
   const { palId } = useParams<{ palId: string }>();
   const isEdit = Boolean(palId);
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ export default function PalForm() {
   const error = createError || updateError;
   const availableRegions = getRegionsForLanguage(form.language);
   const isKnownLanguage = LANGUAGES.some((language) => language.code === form.language);
+  const pageTitle = isEdit ? t('form.editTitle') : t('form.createTitle');
 
   useEffect(() => {
     if (existingPal) {
@@ -133,8 +136,8 @@ export default function PalForm() {
   if (isEdit && palsLoading) {
     return (
       <div className="min-h-full flex flex-col bg-warm-50 dark:bg-dark-900">
-        <PageHeader backTo="/pals" backLabel="Pals" title="Edit pal" />
-        <p className="text-sm text-warm-500 dark:text-dark-400 py-16 text-center">Loading pal…</p>
+        <PageHeader backTo="/pals" backLabel={t('common:back.pals')} title={pageTitle} />
+        <p className="text-sm text-warm-500 dark:text-dark-400 py-16 text-center">{t('form.loading')}</p>
       </div>
     );
   }
@@ -142,14 +145,14 @@ export default function PalForm() {
   if (isEdit && !palsLoading && !existingPal) {
     return (
       <div className="min-h-full flex flex-col bg-warm-50 dark:bg-dark-900">
-        <PageHeader backTo="/pals" backLabel="Pals" title="Edit pal" />
+        <PageHeader backTo="/pals" backLabel={t('common:back.pals')} title={pageTitle} />
         <div className="max-w-lg mx-auto px-4 py-16 text-center">
-          <p className="text-warm-600 dark:text-dark-300 mb-4">Pal not found or you don&apos;t have access.</p>
+          <p className="text-warm-600 dark:text-dark-300 mb-4">{t('form.notFound')}</p>
           <Link
             to="/pals"
             className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
           >
-            Back to pals
+            {t('form.backToPals')}
           </Link>
         </div>
       </div>
@@ -158,24 +161,18 @@ export default function PalForm() {
 
   return (
     <div className="min-h-full flex flex-col bg-warm-50 dark:bg-dark-900">
-      <PageHeader
-        backTo="/pals"
-        backLabel="Pals"
-        title={isEdit ? 'Edit pal' : 'Create pal'}
-      />
+      <PageHeader backTo="/pals" backLabel={t('common:back.pals')} title={pageTitle} />
 
       <div className="flex-1 max-w-lg w-full mx-auto px-4 sm:px-6 py-8">
         <div className="bg-white dark:bg-dark-800 border border-warm-200 dark:border-dark-700 rounded-2xl shadow-xl p-6 sm:p-8">
           <h2 className="text-xl font-bold text-warm-800 dark:text-dark-100">
-            {isEdit ? 'Update your pal' : 'Create a new pal'}
+            {isEdit ? t('form.editHeading') : t('form.createHeading')}
           </h2>
-          <p className="mt-1 mb-6 text-sm text-warm-500 dark:text-dark-400">
-            Upload an avatar first, then fill in the details below.
-          </p>
+          <p className="mt-1 mb-6 text-sm text-warm-500 dark:text-dark-400">{t('form.subtitle')}</p>
 
           <form className="space-y-5" onSubmit={handleSubmit} noValidate>
             <ImageUploadField
-              label="Pal avatar"
+              label={t('form.avatar')}
               imageUrl={imageUrl}
               onUpload={handleImageUpload}
               onClear={handleClearImage}
@@ -184,40 +181,40 @@ export default function PalForm() {
 
             <label className="block">
               <span className="block text-xs font-semibold text-warm-600 dark:text-dark-300 mb-1.5">
-                Name
+                {t('form.name')}
               </span>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-                placeholder="e.g. Sofia"
+                placeholder={t('form.namePlaceholder')}
                 className="w-full px-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
               />
               {touched && !form.name.trim() && (
-                <span className="block mt-1 text-xs text-red-500">Name is required.</span>
+                <span className="block mt-1 text-xs text-red-500">{t('form.nameRequired')}</span>
               )}
             </label>
 
             <label className="block">
               <span className="block text-xs font-semibold text-warm-600 dark:text-dark-300 mb-1.5">
-                Description
+                {t('form.description')}
               </span>
               <textarea
                 value={form.description}
                 onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-                placeholder="Personality, teaching style, topics they enjoy…"
+                placeholder={t('form.descriptionPlaceholder')}
                 rows={3}
                 className="w-full px-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
               />
               {touched && !form.description.trim() && (
-                <span className="block mt-1 text-xs text-red-500">Description is required.</span>
+                <span className="block mt-1 text-xs text-red-500">{t('form.descriptionRequired')}</span>
               )}
             </label>
 
             <div className="grid sm:grid-cols-2 gap-4">
               <label className="block">
                 <span className="block text-xs font-semibold text-warm-600 dark:text-dark-300 mb-1.5">
-                  Language
+                  {t('form.language')}
                 </span>
                 <select
                   value={form.language}
@@ -225,7 +222,7 @@ export default function PalForm() {
                   className={selectClassName}
                 >
                   <option value="" disabled>
-                    Select a language
+                    {t('form.selectLanguage')}
                   </option>
                   {form.language && !isKnownLanguage && (
                     <option value={form.language}>{form.language}</option>
@@ -237,13 +234,13 @@ export default function PalForm() {
                   ))}
                 </select>
                 {touched && !form.language.trim() && (
-                  <span className="block mt-1 text-xs text-red-500">Required.</span>
+                  <span className="block mt-1 text-xs text-red-500">{t('form.required')}</span>
                 )}
               </label>
 
               <label className="block">
                 <span className="block text-xs font-semibold text-warm-600 dark:text-dark-300 mb-1.5">
-                  Country / Region
+                  {t('form.country')}
                 </span>
                 <select
                   value={form.country}
@@ -252,7 +249,7 @@ export default function PalForm() {
                   className={`${selectClassName} disabled:opacity-60 disabled:cursor-not-allowed`}
                 >
                   <option value="" disabled>
-                    {form.language ? 'Select a country / region' : 'Select a language first'}
+                    {form.language ? t('form.selectCountry') : t('form.selectLanguageFirst')}
                   </option>
                   {form.country &&
                     !availableRegions.some((region) => region.code === form.country) && (
@@ -265,14 +262,14 @@ export default function PalForm() {
                   ))}
                 </select>
                 {touched && !form.country.trim() && (
-                  <span className="block mt-1 text-xs text-red-500">Required.</span>
+                  <span className="block mt-1 text-xs text-red-500">{t('form.required')}</span>
                 )}
               </label>
             </div>
 
             <label className="block">
               <span className="block text-xs font-semibold text-warm-600 dark:text-dark-300 mb-1.5">
-                Language level
+                {t('form.level')}
               </span>
               <select
                 value={form.languageLevel}
@@ -284,9 +281,10 @@ export default function PalForm() {
                     {level}
                   </option>
                 ))}
-                {form.languageLevel && !LANGUAGE_LEVELS.includes(form.languageLevel as typeof LANGUAGE_LEVELS[number]) && (
-                  <option value={form.languageLevel}>{form.languageLevel}</option>
-                )}
+                {form.languageLevel &&
+                  !LANGUAGE_LEVELS.includes(form.languageLevel as (typeof LANGUAGE_LEVELS)[number]) && (
+                    <option value={form.languageLevel}>{form.languageLevel}</option>
+                  )}
               </select>
             </label>
 
@@ -299,17 +297,17 @@ export default function PalForm() {
               />
               <span>
                 <span className="block text-sm font-semibold text-warm-800 dark:text-dark-100">
-                  Make public
+                  {t('form.makePublic')}
                 </span>
                 <span className="block text-xs text-warm-500 dark:text-dark-400 mt-0.5">
-                  Public pals can be discovered and chatted with by other users.
+                  {t('form.makePublicHint')}
                 </span>
               </span>
             </label>
 
             {error != null && (
               <p className="px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">
-                {getErrorMessage(error, isEdit ? 'Could not update pal.' : 'Could not create pal.')}
+                {getErrorMessage(error, isEdit ? t('form.updateError') : t('form.createError'))}
               </p>
             )}
 
@@ -324,7 +322,7 @@ export default function PalForm() {
                 to="/pals"
                 className="flex-1 py-2.5 rounded-xl font-semibold text-sm text-center text-warm-700 dark:text-dark-200 border border-warm-300 dark:border-dark-600 hover:border-warm-400 dark:hover:border-dark-500 transition"
               >
-                Cancel
+                {t('form.cancel')}
               </Link>
               <button
                 type="submit"
@@ -332,7 +330,7 @@ export default function PalForm() {
                 className="flex-1 py-2.5 rounded-xl font-semibold text-sm text-white bg-indigo-500 hover:bg-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm transition flex items-center justify-center gap-2"
               >
                 {isLoading && <i className="fas fa-circle-notch fa-spin" aria-hidden="true" />}
-                {isLoading ? 'Saving…' : isEdit ? 'Save changes' : 'Create pal'}
+                {isLoading ? t('form.saving') : isEdit ? t('form.save') : t('form.create')}
               </button>
             </div>
           </form>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useGetChatsQuery } from '../api/chatsApi';
 import { getErrorMessage } from '../api/errors';
 import { useGetMyPalsQuery, useGetPalsQuery } from '../api/palsApi';
@@ -17,6 +18,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const { t } = useTranslation(['chat', 'common']);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { palId: activePalId } = useParams<{ palId?: string }>();
@@ -78,27 +80,29 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     navigate('/', { replace: true });
   }
 
+  const toggleLabel = isPickingPal ? t('backToChats') : t('newChat');
+
   return (
     <>
       <aside
-        className={`fixed inset-y-0 left-0 z-30 flex w-80 max-w-[85%] flex-col
-          bg-warm-50 dark:bg-dark-900 border-r border-warm-200 dark:border-dark-700
+        className={`fixed inset-y-0 start-0 z-30 flex w-80 max-w-[85%] flex-col
+          bg-warm-50 dark:bg-dark-900 border-e border-warm-200 dark:border-dark-700
           shadow-lg transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isOpen ? 'translate-x-0' : 'max-sm:ltr:-translate-x-full max-sm:rtl:translate-x-full'}
           sm:static sm:z-auto sm:w-80 lg:w-96 sm:max-w-none sm:translate-x-0 sm:shadow-sm sm:flex-shrink-0`}
       >
         <div className="px-5 py-4 border-b border-warm-200 dark:border-dark-700 flex items-center justify-between">
           <h2 className="text-xl font-bold text-warm-800 dark:text-dark-100 tracking-tight">
-            <i className="far fa-comments mr-2 text-indigo-500 dark:text-indigo-400" aria-hidden="true" />
-            {isPickingPal ? 'New chat' : 'Chats'}
+            <i className="far fa-comments me-2 text-indigo-500 dark:text-indigo-400" aria-hidden="true" />
+            {isPickingPal ? t('newChat') : t('chats')}
           </h2>
           <div className="flex items-center gap-1">
             <button
               type="button"
               onClick={() => setPickingPal((open) => !open)}
               className="text-warm-500 hover:text-indigo-600 dark:text-dark-300 dark:hover:text-indigo-400 transition p-2 rounded-full hover:bg-warm-200 dark:hover:bg-dark-700"
-              title={isPickingPal ? 'Back to chats' : 'New chat'}
-              aria-label={isPickingPal ? 'Back to chats' : 'New chat'}
+              title={toggleLabel}
+              aria-label={toggleLabel}
             >
               <i className={`fas ${isPickingPal ? 'fa-arrow-left' : 'fa-pen-to-square'} text-lg`} aria-hidden="true" />
             </button>
@@ -108,60 +112,69 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="px-4 py-3">
           <div className="relative">
             <i
-              className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-warm-400 dark:text-dark-400 text-sm"
+              className="fas fa-search absolute start-3 top-1/2 -translate-y-1/2 text-warm-400 dark:text-dark-400 text-sm"
               aria-hidden="true"
             />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={isPickingPal ? 'Search pals...' : 'Search chats...'}
-              aria-label={isPickingPal ? 'Search pals' : 'Search chats'}
-              className="w-full pl-9 pr-3 py-2.5 bg-warm-100 dark:bg-dark-800 border border-warm-200 dark:border-dark-700 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-700 transition"
+              placeholder={isPickingPal ? t('searchPals') : t('searchChats')}
+              aria-label={isPickingPal ? t('searchPalsLabel') : t('searchChatsLabel')}
+              className="w-full ps-9 pe-3 py-2.5 bg-warm-100 dark:bg-dark-800 border border-warm-200 dark:border-dark-700 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-700 transition"
             />
           </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto custom-scroll px-3 pb-3 space-y-1" aria-label={isPickingPal ? 'Pals' : 'Chats'}>
+        <nav
+          className="flex-1 overflow-y-auto custom-scroll px-3 pb-3 space-y-1"
+          aria-label={isPickingPal ? t('common:nav.pals') : t('chats')}
+        >
           {isPickingPal ? (
             <>
               {(myPalsLoading || publicPalsLoading) && (
-                <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">Loading pals…</p>
+                <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">{t('loadingPals')}</p>
               )}
-              <PalGroup title="Your pals" pals={palSections.mine} onOpened={handleThreadOpened} />
-              <PalGroup title="Discover" pals={palSections.discover} onOpened={handleThreadOpened} />
+              <PalGroup title={t('yourPals')} pals={palSections.mine} onOpened={handleThreadOpened} />
+              <PalGroup title={t('discover')} pals={palSections.discover} onOpened={handleThreadOpened} />
               {!myPalsLoading &&
                 !publicPalsLoading &&
                 palSections.mine.length === 0 &&
                 palSections.discover.length === 0 && (
                   <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">
-                    {query.trim() ? `No pals match “${query}”.` : 'No pals yet.'}
+                    {query.trim() ? t('noPalsMatch', { query }) : t('noPalsYet')}
                   </p>
                 )}
             </>
           ) : (
             <>
               {chatsLoading && (
-                <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">Loading chats…</p>
+                <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">{t('loadingChats')}</p>
               )}
               {chatsError && (
                 <p className="px-3 py-4 text-sm text-red-500">
-                  {getErrorMessage(chatsError, 'Could not load chats.')}
+                  {getErrorMessage(chatsError, t('loadChatsError'))}
                 </p>
               )}
               {!chatsLoading && visibleChats.length === 0 && (
                 <p className="px-3 py-4 text-sm text-warm-500 dark:text-dark-400">
-                  {query.trim()
-                    ? `No chats match “${query}”.`
-                    : <>No chats yet. <Link to="/pals" className="text-indigo-400 hover:underline">Start one with a pal</Link>.</>
-               
-                  }            
+                  {query.trim() ? (
+                    t('noChatsMatch', { query })
+                  ) : (
+                    <>
+                      {t('noChatsYet')}{' '}
+                      <Link to="/pals" className="text-indigo-400 hover:underline">
+                        {t('startWithPal')}
+                      </Link>
+                      .
+                    </>
+                  )}
                 </p>
               )}
               {visibleChats.map((chat) => {
                 const localMessages = messagesByChatId[chat.id] ?? [];
                 const lastLocal = localMessages[localMessages.length - 1];
-                const lastMessage = lastLocal?.message ?? chat.lastMessage ?? 'Start a conversation';
+                const lastMessage = lastLocal?.message ?? chat.lastMessage ?? t('startConversation');
                 const time = formatMessageTime(lastLocal?.createdAt ?? chat.updatedAt);
                 return (
                   <ThreadItem
@@ -190,42 +203,42 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <Link
               to="/pals"
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-warm-600 dark:text-dark-300 hover:bg-warm-200 dark:hover:bg-dark-700 transition"
-              title="Manage pals"
+              title={t('managePals')}
             >
               <i className="fas fa-user-group" aria-hidden="true" />
-              Pals
+              {t('common:nav.pals')}
             </Link>
             <Link
               to="/settings/profile"
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-warm-600 dark:text-dark-300 hover:bg-warm-200 dark:hover:bg-dark-700 transition"
-              title="Settings"
+              title={t('settings')}
             >
               <i className="fas fa-gear" aria-hidden="true" />
-              Settings
+              {t('settings')}
             </Link>
           </div>
           <div className="flex items-center gap-3">
-          <Avatar
-            name={user?.name ?? 'You'}
-            image={user?.profileImage}
-            initials={user?.initials}
-            className="w-9 h-9 text-sm flex-shrink-0"
-          />
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-warm-800 dark:text-dark-100 truncate">
-              {user?.name}
-            </p>
-            <p className="text-xs text-warm-500 dark:text-dark-400 truncate">{user?.email}</p>
-          </div>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="text-warm-400 hover:text-red-500 dark:text-dark-400 dark:hover:text-red-400 p-1.5 rounded-full hover:bg-warm-200 dark:hover:bg-dark-700 transition"
-            title="Log out"
-            aria-label="Log out"
-          >
-            <i className="fas fa-arrow-right-from-bracket text-sm" aria-hidden="true" />
-          </button>
+            <Avatar
+              name={user?.name ?? t('you')}
+              image={user?.profileImage}
+              initials={user?.initials}
+              className="w-9 h-9 text-sm flex-shrink-0"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-warm-800 dark:text-dark-100 truncate">
+                {user?.name}
+              </p>
+              <p className="text-xs text-warm-500 dark:text-dark-400 truncate">{user?.email}</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="text-warm-400 hover:text-red-500 dark:text-dark-400 dark:hover:text-red-400 p-1.5 rounded-full hover:bg-warm-200 dark:hover:bg-dark-700 transition"
+              title={t('logOut')}
+              aria-label={t('logOut')}
+            >
+              <i className="fas fa-arrow-right-from-bracket text-sm" aria-hidden="true" />
+            </button>
           </div>
         </div>
       </aside>
@@ -263,7 +276,7 @@ function PalGroup({
             key={pal.id}
             to={chatPathForPal(pal.id)}
             onClick={onOpened}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left no-underline hover:bg-warm-100 dark:hover:bg-dark-800 transition"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-start no-underline hover:bg-warm-100 dark:hover:bg-dark-800 transition"
           >
             <Avatar name={pal.name} image={pal.image} className="w-10 h-10 text-sm flex-shrink-0" />
             <div className="min-w-0 flex-1">

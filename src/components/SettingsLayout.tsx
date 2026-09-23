@@ -1,20 +1,23 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PageHeader from './PageHeader';
 
-const navItems = [
-  { to: '/settings/profile', label: 'Profile', icon: 'fa-user' },
-  { to: '/settings/password', label: 'Password', icon: 'fa-lock' },
-];
-
 export default function SettingsLayout() {
+  const { t } = useTranslation(['settings', 'common']);
+
+  const navItems = [
+    { to: '/settings/profile', label: t('profile.nav'), icon: 'fa-user' },
+    { to: '/settings/password', label: t('password.nav'), icon: 'fa-lock' },
+  ];
+
   return (
     <div className="min-h-full flex flex-col bg-warm-50 dark:bg-dark-900">
-      <PageHeader backTo="/chat" backLabel="Chat" title="Settings" />
+      <PageHeader backTo="/chat" backLabel={t('common:back.chat')} title={t('title')} />
 
       <div className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-8">
         <nav
           className="flex gap-2 mb-8 p-1 bg-warm-100 dark:bg-dark-800 rounded-xl border border-warm-200 dark:border-dark-700"
-          aria-label="Settings"
+          aria-label={t('navLabel')}
         >
           {navItems.map((item) => (
             <NavLink

@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useUpdatePasswordMutation } from '../api/authApi';
 import { getErrorMessage } from '../api/errors';
 
 export default function UpdatePassword() {
+  const { t } = useTranslation('settings');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,7 +29,7 @@ export default function UpdatePassword() {
       setNewPassword('');
       setConfirmPassword('');
       setTouched(false);
-      setSuccessMessage('Password updated successfully.');
+      setSuccessMessage(t('password.success'));
     } catch {
       // Hook `error` is shown below.
     }
@@ -35,42 +37,40 @@ export default function UpdatePassword() {
 
   return (
     <div className="bg-white dark:bg-dark-800 border border-warm-200 dark:border-dark-700 rounded-2xl shadow-xl p-6 sm:p-8">
-      <h2 className="text-xl font-bold text-warm-800 dark:text-dark-100">Password</h2>
-      <p className="mt-1 mb-6 text-sm text-warm-500 dark:text-dark-400">
-        Choose a strong password with at least 6 characters.
-      </p>
+      <h2 className="text-xl font-bold text-warm-800 dark:text-dark-100">{t('password.title')}</h2>
+      <p className="mt-1 mb-6 text-sm text-warm-500 dark:text-dark-400">{t('password.subtitle')}</p>
 
       <form className="space-y-4" onSubmit={handleSubmit} noValidate>
         <PasswordField
-          label="Current password"
+          label={t('password.current')}
           value={currentPassword}
           onChange={setCurrentPassword}
           autoComplete="current-password"
           showError={touched && !currentPassword}
-          errorMessage="Enter your current password."
+          errorMessage={t('password.currentRequired')}
         />
 
         <PasswordField
-          label="New password"
+          label={t('password.new')}
           value={newPassword}
           onChange={setNewPassword}
           autoComplete="new-password"
           showError={touched && newPassword.length > 0 && newPassword.length < 6}
-          errorMessage="Must be at least 6 characters."
+          errorMessage={t('password.minLength')}
         />
 
         <PasswordField
-          label="Confirm new password"
+          label={t('password.confirm')}
           value={confirmPassword}
           onChange={setConfirmPassword}
           autoComplete="new-password"
           showError={touched && confirmPassword.length > 0 && !passwordsMatch}
-          errorMessage="Passwords do not match."
+          errorMessage={t('password.mismatch')}
         />
 
         {error != null && (
           <p className="px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">
-            {getErrorMessage(error, 'Could not update password.')}
+            {getErrorMessage(error, t('password.error'))}
           </p>
         )}
 
@@ -86,7 +86,7 @@ export default function UpdatePassword() {
           className="w-full py-2.5 rounded-xl font-semibold text-sm text-white bg-indigo-500 hover:bg-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm transition flex items-center justify-center gap-2"
         >
           {isLoading && <i className="fas fa-circle-notch fa-spin" aria-hidden="true" />}
-          {isLoading ? 'Updating…' : 'Update password'}
+          {isLoading ? t('password.updating') : t('password.update')}
         </button>
       </form>
     </div>

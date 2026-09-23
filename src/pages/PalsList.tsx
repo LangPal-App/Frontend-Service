@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   useDeletePalMutation,
   useGetMyPalsQuery,
@@ -14,6 +15,7 @@ import { useAppSelector } from '../app/hooks';
 type Tab = 'mine' | 'discover';
 
 export default function PalsList() {
+  const { t } = useTranslation(['pals', 'common']);
   const navigate = useNavigate();
   const userId = useAppSelector((state) => state.auth.user?.id);
   const [activeTab, setActiveTab] = useState<Tab>('mine');
@@ -40,7 +42,7 @@ export default function PalsList() {
   const error = activeTab === 'mine' ? myError : publicError;
 
   async function handleDelete(palId: string, palName: string) {
-    if (!window.confirm(`Delete "${palName}"? This cannot be undone.`)) return;
+    if (!window.confirm(t('deleteConfirm', { name: palName }))) return;
     try {
       await deletePal(palId).unwrap();
     } catch {
@@ -50,22 +52,20 @@ export default function PalsList() {
 
   return (
     <div className="min-h-full flex flex-col bg-warm-50 dark:bg-dark-900">
-      <PageHeader backTo="/chat" backLabel="Chat" title="Pals" />
+      <PageHeader backTo="/chat" backLabel={t('common:back.chat')} title={t('title')} />
 
       <div className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-warm-800 dark:text-dark-100">Your language pals</h2>
-            <p className="mt-1 text-sm text-warm-500 dark:text-dark-400">
-              Create and manage AI conversation partners.
-            </p>
+            <h2 className="text-2xl font-bold text-warm-800 dark:text-dark-100">{t('heading')}</h2>
+            <p className="mt-1 text-sm text-warm-500 dark:text-dark-400">{t('subtitle')}</p>
           </div>
           <Link
             to="/pals/new"
             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-500 hover:bg-indigo-600 shadow-sm transition shrink-0"
           >
             <i className="fas fa-plus" aria-hidden="true" />
-            Create pal
+            {t('create')}
           </Link>
         </div>
 
@@ -86,18 +86,18 @@ export default function PalsList() {
                   : 'text-warm-600 dark:text-dark-300 hover:text-warm-800 dark:hover:text-dark-100'
               }`}
             >
-              {tab === 'mine' ? 'My pals' : 'Discover'}
+              {t(`tabs.${tab}`)}
             </button>
           ))}
         </div>
 
         {isLoading && (
-          <p className="text-sm text-warm-500 dark:text-dark-400 py-8 text-center">Loading pals…</p>
+          <p className="text-sm text-warm-500 dark:text-dark-400 py-8 text-center">{t('loading')}</p>
         )}
 
         {error != null && (
           <p className="px-4 py-3 rounded-xl bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm">
-            {getErrorMessage(error, 'Could not load pals.')}
+            {getErrorMessage(error, t('loadError'))}
           </p>
         )}
 
@@ -107,12 +107,10 @@ export default function PalsList() {
               <i className="fas fa-user-group" aria-hidden="true" />
             </div>
             <p className="font-semibold text-warm-800 dark:text-dark-100 mb-1">
-              {activeTab === 'mine' ? 'No pals yet' : 'Nothing to discover'}
+              {activeTab === 'mine' ? t('emptyMineTitle') : t('emptyDiscoverTitle')}
             </p>
             <p className="text-sm text-warm-500 dark:text-dark-400 mb-5">
-              {activeTab === 'mine'
-                ? 'Create your first language pal to start practicing.'
-                : 'Check back later for public pals from the community.'}
+              {activeTab === 'mine' ? t('emptyMineBody') : t('emptyDiscoverBody')}
             </p>
             {activeTab === 'mine' && (
               <Link
@@ -120,7 +118,7 @@ export default function PalsList() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-500 hover:bg-indigo-600 transition"
               >
                 <i className="fas fa-plus" aria-hidden="true" />
-                Create your first pal
+                {t('createFirst')}
               </Link>
             )}
           </div>
@@ -143,17 +141,17 @@ export default function PalsList() {
                       </p>
                       {pal.isPublic ? (
                         <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
-                          Public
+                          {t('public')}
                         </span>
                       ) : (
                         <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-warm-100 dark:bg-dark-700 text-warm-500 dark:text-dark-400">
-                          Private
+                          {t('private')}
                         </span>
                       )}
                     </div>
                     {activeTab !== 'mine' && (
                       <p className="text-xs text-warm-400 dark:text-dark-500 mt-0.5">
-                        by @{pal.createdByUsername}
+                        {t('byUser', { username: pal.createdByUsername })}
                       </p>
                     )}
                     <p className="text-xs text-warm-500 dark:text-dark-400 mt-0.5 truncate">
@@ -166,7 +164,7 @@ export default function PalsList() {
                     )}
                     {!isOwner && (
                       <p className="text-xs text-warm-500 dark:text-dark-200 mt-1">
-                        by @{pal.createdByUsername}
+                        {t('byUser', { username: pal.createdByUsername })}
                       </p>
                     )}
                   </div>
@@ -175,8 +173,8 @@ export default function PalsList() {
                     <Link
                       to={chatPathForPal(pal.id)}
                       className="p-2 rounded-lg text-warm-500 dark:text-dark-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-warm-100 dark:hover:bg-dark-700 transition"
-                      title="Chat with pal"
-                      aria-label={`Chat with ${pal.name}`}
+                      title={t('chatWith')}
+                      aria-label={`${t('chatWith')} ${pal.name}`}
                     >
                       <i className="fas fa-comment text-sm" aria-hidden="true" />
                     </Link>
@@ -186,8 +184,8 @@ export default function PalsList() {
                           type="button"
                           onClick={() => navigate(`/pals/${pal.id}/edit`)}
                           className="p-2 rounded-lg text-warm-500 dark:text-dark-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-warm-100 dark:hover:bg-dark-700 transition"
-                          title="Edit pal"
-                          aria-label={`Edit ${pal.name}`}
+                          title={t('edit')}
+                          aria-label={`${t('edit')} ${pal.name}`}
                         >
                           <i className="fas fa-pen text-sm" aria-hidden="true" />
                         </button>
@@ -196,8 +194,8 @@ export default function PalsList() {
                           onClick={() => handleDelete(pal.id, pal.name)}
                           disabled={isDeleting}
                           className="p-2 rounded-lg text-warm-500 dark:text-dark-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-warm-100 dark:hover:bg-dark-700 transition disabled:opacity-50"
-                          title="Delete pal"
-                          aria-label={`Delete ${pal.name}`}
+                          title={t('delete')}
+                          aria-label={`${t('delete')} ${pal.name}`}
                         >
                           <i className="fas fa-trash text-sm" aria-hidden="true" />
                         </button>

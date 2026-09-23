@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useGetChatMessagesQuery,
   useLazyGetChatMessagesQuery,
@@ -18,6 +19,7 @@ import MessageBubble from './MessageBubble';
 import MessageInput from './MessageInput';
 
 export default function ChatWindow() {
+  const { t } = useTranslation('chat');
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const { palId, chat, pal, chatId, isLoading: threadLoading } = useActiveThread();
@@ -58,10 +60,12 @@ export default function ChatWindow() {
 
   const palName = chat?.palName ?? pal?.name;
   const palImage = chat?.palImage ?? pal?.image ?? null;
+  const youLabel = t('you');
+  const palLabel = t('pal');
   const palLanguage = pal
     ? `${pal.language} · ${pal.languageLevel}`
     : chat
-      ? 'Language partner'
+      ? t('languagePartner')
       : null;
 
   const chatKey = chatId ?? (palId ? pendingChatKey(palId) : null);
@@ -77,7 +81,7 @@ export default function ChatWindow() {
       const isFailedSend = sendError?.messageId === message.id;
       return {
         id: message.id,
-        sender: isOwn ? 'You' : palName ?? 'Pal',
+        sender: isOwn ? youLabel : palName ?? palLabel,
         text: message.message,
         time: formatMessageTime(message.createdAt),
         isOwn,
@@ -93,7 +97,7 @@ export default function ChatWindow() {
       const isFailedSend = sendError?.messageId === optimistic.id;
       ui.push({
         id: optimistic.id,
-        sender: 'You',
+        sender: youLabel,
         text: optimistic.message,
         time: formatMessageTime(optimistic.createdAt),
         isOwn: true,
@@ -108,7 +112,7 @@ export default function ChatWindow() {
     if (streaming != null) {
       ui.push({
         id: `${chatKey}-streaming`,
-        sender: palName ?? 'Pal',
+        sender: palName ?? palLabel,
         text: streaming,
         time: '',
         isOwn: false,
@@ -125,11 +129,13 @@ export default function ChatWindow() {
     messagesByChatId,
     optimisticUserByChatId,
     palImage,
+    palLabel,
     palName,
     status,
     streamingByChatId,
     user?.initials,
     user?.profileImage,
+    youLabel,
   ]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -212,7 +218,7 @@ export default function ChatWindow() {
   if (!palId) {
     return (
       <main className="flex-1 flex items-center justify-center text-warm-500 dark:text-dark-400 bg-warm-50 dark:bg-dark-950 px-6 text-center">
-        <p>Pick a pal from the sidebar to start a conversation.</p>
+        <p>{t('pickPal')}</p>
       </main>
     );
   }
@@ -220,7 +226,7 @@ export default function ChatWindow() {
   if (!palName) {
     return (
       <main className="flex-1 flex items-center justify-center text-warm-500 dark:text-dark-400 bg-warm-50 dark:bg-dark-950 px-6 text-center">
-        <p>{threadLoading ? 'Loading chat…' : 'This pal could not be found.'}</p>
+        <p>{threadLoading ? t('loadingChat') : t('palNotFound')}</p>
       </main>
     );
   }
@@ -240,7 +246,7 @@ export default function ChatWindow() {
               }`}
               aria-hidden="true"
             />
-            <span>{status === 'streaming' ? 'Replying…' : palLanguage}</span>
+            <span>{status === 'streaming' ? t('replying') : palLanguage}</span>
           </p>
         </div>
       </div>
@@ -259,27 +265,27 @@ export default function ChatWindow() {
                 disabled={isFetchingOlderMessages}
                 className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 disabled:opacity-60 transition"
               >
-                {isFetchingOlderMessages ? 'Loading older messages…' : 'Load older messages'}
+                {isFetchingOlderMessages ? t('loadingOlder') : t('loadOlder')}
               </button>
             ) : showNoMoreMessages ? (
               <span className="text-xs text-warm-400 dark:text-dark-500">
-                No more messages
+                {t('noMoreMessages')}
               </span>
             ) : isFetchingInitialMessages ? (
               <span className="text-xs text-warm-400 dark:text-dark-500">
-                Loading messages…
+                {t('loadingMessages')}
               </span>
             ) : null}
           </div>
         )}
         {messages.length === 0 && !isFetchingInitialMessages && (
           <p className="text-center text-sm text-warm-500 dark:text-dark-400 pt-8">
-            Say hello in the language you want to practice.
+            {t('sayHello')}
           </p>
         )}
         {initialMessagesError && messages.length === 0 && (
           <p className="text-center text-xs text-red-500 px-4">
-            Could not load messages for this chat.
+            {t('loadMessagesError')}
           </p>
         )}
         {messages.map((message) => (

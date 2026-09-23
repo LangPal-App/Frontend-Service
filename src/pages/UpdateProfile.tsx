@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useUpdateProfileImageMutation,
   useUpdateProfileMutation,
@@ -11,6 +12,7 @@ import { mapApiUser } from '../features/auth/authStorage';
 import Avatar from '../components/Avatar';
 
 export default function UpdateProfile() {
+  const { t } = useTranslation('settings');
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
 
@@ -49,7 +51,7 @@ export default function UpdateProfile() {
     try {
       const updatedUser = await updateProfile({ name: name.trim() }).unwrap();
       dispatch(setUser(mapApiUser(updatedUser)));
-      setSuccessMessage('Profile updated successfully.');
+      setSuccessMessage(t('profile.success'));
     } catch {
       // Hook `error` is shown below.
     }
@@ -57,14 +59,12 @@ export default function UpdateProfile() {
 
   return (
     <div className="bg-white dark:bg-dark-800 border border-warm-200 dark:border-dark-700 rounded-2xl shadow-xl p-6 sm:p-8">
-      <h2 className="text-xl font-bold text-warm-800 dark:text-dark-100">Profile</h2>
-      <p className="mt-1 mb-6 text-sm text-warm-500 dark:text-dark-400">
-        Update your display name and profile photo.
-      </p>
+      <h2 className="text-xl font-bold text-warm-800 dark:text-dark-100">{t('profile.title')}</h2>
+      <p className="mt-1 mb-6 text-sm text-warm-500 dark:text-dark-400">{t('profile.subtitle')}</p>
 
       <div className="flex items-center gap-4 mb-8 p-4 rounded-xl bg-warm-50 dark:bg-dark-900/50 border border-warm-200 dark:border-dark-700">
         <Avatar
-          name={user?.name ?? 'You'}
+          name={user?.name ?? t('profile.you')}
           image={user?.profileImage}
           initials={user?.initials}
           className="w-14 h-14 text-lg shrink-0"
@@ -78,7 +78,7 @@ export default function UpdateProfile() {
 
       <form className="space-y-6" onSubmit={handleSubmit} noValidate>
         <ImageUploadField
-          label="Profile photo"
+          label={t('profile.photo')}
           imageUrl={user?.profileImage ?? null}
           onUpload={handleImageUpload}
           disabled={isLoading}
@@ -86,24 +86,24 @@ export default function UpdateProfile() {
 
         <label className="block">
           <span className="block text-xs font-semibold text-warm-600 dark:text-dark-300 mb-1.5">
-            Display name
+            {t('profile.displayName')}
           </span>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
+            placeholder={t('profile.namePlaceholder')}
             autoComplete="name"
             className="w-full px-3 py-2.5 bg-warm-100 dark:bg-dark-700 border border-warm-200 dark:border-dark-600 rounded-xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-600 transition"
           />
           {touched && !name.trim() && (
-            <span className="block mt-1 text-xs text-red-500">Name is required.</span>
+            <span className="block mt-1 text-xs text-red-500">{t('profile.nameRequired')}</span>
           )}
         </label>
 
         {error != null && (
           <p className="px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">
-            {getErrorMessage(error, 'Could not update profile.')}
+            {getErrorMessage(error, t('profile.error'))}
           </p>
         )}
 
@@ -119,7 +119,7 @@ export default function UpdateProfile() {
           className="w-full py-2.5 rounded-xl font-semibold text-sm text-white bg-indigo-500 hover:bg-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm transition flex items-center justify-center gap-2"
         >
           {isUpdatingProfile && <i className="fas fa-circle-notch fa-spin" aria-hidden="true" />}
-          {isUpdatingProfile ? 'Saving…' : 'Save profile'}
+          {isUpdatingProfile ? t('profile.saving') : t('profile.save')}
         </button>
       </form>
     </div>

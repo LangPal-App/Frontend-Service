@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { abortChatMessage, sendChatMessage } from '../features/chat/sendChatMessage';
 
@@ -13,6 +14,7 @@ export default function MessageInput({
   chatId,
   palId,
 }: MessageInputProps) {
+  const { t } = useTranslation('chat');
   const dispatch = useAppDispatch();
   const canSend = Boolean(chatId || palId);
   const isStreaming = useAppSelector((state) => state.chat.status === 'streaming');
@@ -48,8 +50,8 @@ export default function MessageInput({
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={isStreaming ? 'Waiting for a reply…' : 'Type your message...'}
-          aria-label="Write a message"
+          placeholder={isStreaming ? t('waitingReply') : t('typeMessage')}
+          aria-label={t('writeMessage')}
           disabled={isDisabled}
           className="w-full pl-4 pr-12 py-2.5 bg-warm-100 dark:bg-dark-800 border border-warm-200 dark:border-dark-700 rounded-3xl text-sm text-warm-800 dark:text-dark-100 placeholder-warm-400 dark:placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 focus:border-indigo-300 dark:focus:border-indigo-700 transition disabled:opacity-60"
         />
@@ -58,8 +60,8 @@ export default function MessageInput({
             type="button"
             onClick={handleAbort}
             className="absolute right-1 top-1/2 -translate-y-1/2 text-warm-600 dark:text-dark-200 hover:text-red-500 dark:hover:text-red-400 p-1.5 rounded-full hover:bg-warm-200/80 dark:hover:bg-dark-700 transition"
-            title="Stop generating"
-            aria-label="Stop generating reply"
+            title={t('stop')}
+            aria-label={t('stop')}
           >
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-warm-700 dark:bg-dark-100 text-warm-50 dark:text-dark-900">
               <span className="block h-2 w-2 rounded-[1px] bg-current" aria-hidden="true" />
@@ -70,8 +72,8 @@ export default function MessageInput({
             type="submit"
             disabled={!text.trim() || isDisabled}
             className="absolute right-1 top-1/2 -translate-y-1/2 text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 disabled:opacity-40 disabled:cursor-not-allowed p-1.5 rounded-full"
-            title="Send"
-            aria-label="Send message"
+            title={t('send')}
+            aria-label={t('send')}
           >
             <i className="fas fa-paper-plane text-base" aria-hidden="true" />
           </button>

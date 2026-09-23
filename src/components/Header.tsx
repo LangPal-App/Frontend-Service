@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../app/hooks';
 import { getAlternateLanguage } from '../i18n/languages';
 import ThemeToggle from './ThemeToggle';
@@ -12,6 +13,7 @@ function navLinkClass(isActive: boolean) {
 }
 
 export default function Header() {
+  const { t, i18n } = useTranslation('common');
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const nextLanguage = getAlternateLanguage(i18n.language);
 
@@ -25,7 +27,7 @@ export default function Header() {
           <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-md">
             <img src="/logo2.webp" alt="" className="w-6 h-6 object-contain" />
           </span>
-          LangPal
+          {t('brand')}
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-2">
@@ -37,24 +39,24 @@ export default function Header() {
           </Link>
           <ThemeToggle />
           {isAuthenticated ? (
-            <nav className="flex items-center gap-1" aria-label="Main">
+            <nav className="flex items-center gap-1" aria-label={t('nav.main')}>
               <NavLink to="/pals" className={({ isActive }) => navLinkClass(isActive)}>
-                Pals
+                {t('nav.pals')}
               </NavLink>
               <NavLink to="/settings" className={({ isActive }) => navLinkClass(isActive)}>
-                Settings
+                {t('nav.settings')}
               </NavLink>
             </nav>
           ) : (
-            <nav className="flex items-center gap-1 sm:gap-2" aria-label="Main">
+            <nav className="flex items-center gap-1 sm:gap-2" aria-label={t('nav.main')}>
               <NavLink to="/login" className={({ isActive }) => `hidden sm:inline-flex ${navLinkClass(isActive)}`}>
-                Log in
+                {t('nav.logIn')}
               </NavLink>
               <NavLink
                 to="/signup"
                 className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-indigo-500 hover:bg-indigo-600 shadow-sm transition"
               >
-                Get started
+                {t('nav.getStarted')}
               </NavLink>
             </nav>
           )}
