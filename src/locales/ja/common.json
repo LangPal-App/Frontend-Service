@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
-    "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "main": "メイン",
+    "pals": "パル",
+    "settings": "設定",
+    "logIn": "ログイン",
+    "getStarted": "はじめる"
   },
   "languages": {
     "en": "English",
@@ -24,14 +24,14 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "言語を選択",
+  "close": "閉じる",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "カラーテーマを切り替え"
   },
   "back": {
-    "home": "Home",
-    "chat": "Chat",
-    "pals": "Pals"
+    "home": "ホーム",
+    "chat": "チャット",
+    "pals": "パル"
   }
 }

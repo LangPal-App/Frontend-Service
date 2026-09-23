@@ -1,0 +1,33 @@
+{
+  "logoAlt": "Logo de LangPal",
+  "badge": "Práctica de idiomas con IA",
+  "headlineBefore": "Aprende idiomas a través de",
+  "headlineHighlight": "conversación real",
+  "subtitle": "Conoce a tus compañeros de idiomas — socios de IA que se adaptan a tu nivel, te mantienen hablando y hacen que la práctica sea natural.",
+  "ctaStart": "Empezar gratis",
+  "ctaAccount": "Ya tengo una cuenta",
+  "featuresTitle": "Todo lo que necesitas para seguir hablando",
+  "features": {
+    "practice": {
+      "title": "Practica cualquier idioma",
+      "description": "Chatea con compañeros de IA adaptados a tu idioma objetivo, nivel y contexto cultural."
+    },
+    "build": {
+      "title": "Crea tus propios compañeros",
+      "description": "Crea socios de conversación personalizados con personalidades, acentos y estilos de enseñanza únicos."
+    },
+    "realtime": {
+      "title": "Conversaciones en tiempo real",
+      "description": "Recibe respuestas al instante — sin esperas. Aprende a través de un diálogo natural de ida y vuelta."
+    }
+  },
+  "languagesLabel": "Practica en cualquier idioma",
+  "languagesMore": "+ muchos más",
+  "footerTagline": "© {{year}} LangPal. Conversación, sin complicaciones.",
+  "footerCta": "Crea tu cuenta gratuita",
+  "demoPals": {
+    "sofia": "🇪🇸 Español",
+    "kenji": "🇯🇵 Japonés",
+    "amelie": "🇫🇷 Francés"
+  }
+}

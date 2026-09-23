@@ -1,0 +1,33 @@
+{
+  "logoAlt": "LangPal Logosu",
+  "badge": "Yapay zeka destekli dil pratiği",
+  "headlineBefore": "Dilleri",
+  "headlineHighlight": "gerçek sohbetle öğrenin",
+  "subtitle": "Dil arkadaşlarınızla tanışın — seviyenize uyum sağlayan, konuşmanızı sürdüren ve pratiği doğal hissettiren AI ortakları.",
+  "ctaStart": "Ücretsiz başlayın",
+  "ctaAccount": "Hesabım var",
+  "featuresTitle": "Konuşmaya devam etmek için ihtiyacınız olan her şey",
+  "features": {
+    "practice": {
+      "title": "Herhangi bir dilde pratik yapın",
+      "description": "Hedef dilinize, seviyenize ve kültürel bağlamınıza göre uyarlanmış AI arkadaşlarla sohbet edin."
+    },
+    "build": {
+      "title": "Kendi arkadaşlarınızı oluşturun",
+      "description": "Benzersiz kişilikler, aksanlar ve öğretim tarzlarına sahip özel sohbet ortakları oluşturun."
+    },
+    "realtime": {
+      "title": "Gerçek zamanlı sohbetler",
+      "description": "Yanıtlar anında akar — beklemek yok. Doğal karşılıklı diyaloglarla öğrenin."
+    }
+  },
+  "languagesLabel": "Herhangi bir dilde pratik yapın",
+  "languagesMore": "+ ve daha fazlası",
+  "footerTagline": "© {{year}} LangPal. Sohbet, sade ve net.",
+  "footerCta": "Ücretsiz hesabınızı oluşturun",
+  "demoPals": {
+    "sofia": "🇪🇸 İspanyolca",
+    "kenji": "🇯🇵 Japonca",
+    "amelie": "🇫🇷 Fransızca"
+  }
+}

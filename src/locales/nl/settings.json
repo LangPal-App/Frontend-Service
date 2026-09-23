@@ -1,0 +1,33 @@
+{
+  "title": "Instellingen",
+  "navLabel": "Instellingen",
+  "profile": {
+    "nav": "Profiel",
+    "title": "Profiel",
+    "subtitle": "Werk je weergavenaam en profielfoto bij.",
+    "you": "Jij",
+    "photo": "Profielfoto",
+    "displayName": "Weergavenaam",
+    "namePlaceholder": "Je naam",
+    "nameRequired": "Naam is verplicht.",
+    "error": "Kon profiel niet bijwerken.",
+    "success": "Profiel succesvol bijgewerkt.",
+    "saving": "Bezig met opslaan…",
+    "save": "Profiel opslaan"
+  },
+  "password": {
+    "nav": "Wachtwoord",
+    "title": "Wachtwoord",
+    "subtitle": "Kies een sterk wachtwoord van minimaal 6 tekens.",
+    "current": "Huidig wachtwoord",
+    "new": "Nieuw wachtwoord",
+    "confirm": "Nieuw wachtwoord bevestigen",
+    "currentRequired": "Voer je huidige wachtwoord in.",
+    "minLength": "Moet minimaal 6 tekens bevatten.",
+    "mismatch": "Wachtwoorden komen niet overeen.",
+    "error": "Kon wachtwoord niet bijwerken.",
+    "success": "Wachtwoord succesvol bijgewerkt.",
+    "updating": "Bezig met bijwerken…",
+    "update": "Wachtwoord bijwerken"
+  }
+}

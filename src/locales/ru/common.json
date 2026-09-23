@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
+    "main": "Главная",
     "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "settings": "Настройки",
+    "logIn": "Войти",
+    "getStarted": "Начать"
   },
   "languages": {
     "en": "English",
@@ -24,14 +24,14 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "Выбрать язык",
+  "close": "Закрыть",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "Переключить цветовую тему"
   },
   "back": {
-    "home": "Home",
-    "chat": "Chat",
+    "home": "Главная",
+    "chat": "Чат",
     "pals": "Pals"
   }
 }

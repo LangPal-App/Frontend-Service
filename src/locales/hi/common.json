@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
+    "main": "मुख्य",
     "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "settings": "सेटिंग्स",
+    "logIn": "लॉग इन",
+    "getStarted": "शुरू करें"
   },
   "languages": {
     "en": "English",
@@ -24,14 +24,14 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "भाषा चुनें",
+  "close": "बंद करें",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "रंग थीम बदलें"
   },
   "back": {
-    "home": "Home",
-    "chat": "Chat",
+    "home": "होम",
+    "chat": "चैट",
     "pals": "Pals"
   }
 }

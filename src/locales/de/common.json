@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
+    "main": "Start",
     "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "settings": "Einstellungen",
+    "logIn": "Anmelden",
+    "getStarted": "Loslegen"
   },
   "languages": {
     "en": "English",
@@ -24,13 +24,13 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "Sprache wählen",
+  "close": "Schließen",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "Farbschema wechseln"
   },
   "back": {
-    "home": "Home",
+    "home": "Startseite",
     "chat": "Chat",
     "pals": "Pals"
   }

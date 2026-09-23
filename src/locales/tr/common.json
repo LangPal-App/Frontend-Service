@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
+    "main": "Ana",
     "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "settings": "Ayarlar",
+    "logIn": "Giriş yap",
+    "getStarted": "Başlayın"
   },
   "languages": {
     "en": "English",
@@ -24,14 +24,14 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "Dil seçin",
+  "close": "Kapat",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "Renk temasını değiştir"
   },
   "back": {
-    "home": "Home",
-    "chat": "Chat",
+    "home": "Ana sayfa",
+    "chat": "Sohbet",
     "pals": "Pals"
   }
 }

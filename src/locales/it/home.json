@@ -1,0 +1,33 @@
+{
+  "logoAlt": "Logo LangPal",
+  "badge": "Esercizio linguistico con IA",
+  "headlineBefore": "Impara le lingue attraverso",
+  "headlineHighlight": "conversazioni reali",
+  "subtitle": "Conosci i tuoi language pals — partner IA che si adattano al tuo livello, ti tengono a conversare e rendono la pratica naturale.",
+  "ctaStart": "Inizia gratis",
+  "ctaAccount": "Ho già un account",
+  "featuresTitle": "Tutto ciò che ti serve per continuare a parlare",
+  "features": {
+    "practice": {
+      "title": "Esercitati in qualsiasi lingua",
+      "description": "Chatta con pal IA personalizzati per la tua lingua obiettivo, il tuo livello e il tuo contesto culturale."
+    },
+    "build": {
+      "title": "Crea i tuoi pal",
+      "description": "Crea partner di conversazione personalizzati con personalità, accenti e stili di insegnamento unici."
+    },
+    "realtime": {
+      "title": "Conversazioni in tempo reale",
+      "description": "Risposte istantanee in streaming — niente attese. Impara attraverso un dialogo naturale avanti e indietro."
+    }
+  },
+  "languagesLabel": "Esercitati in qualsiasi lingua",
+  "languagesMore": "+ molte altre",
+  "footerTagline": "© {{year}} LangPal. Conversazione, senza fronzoli.",
+  "footerCta": "Crea il tuo account gratuito",
+  "demoPals": {
+    "sofia": "🇪🇸 Spagnolo",
+    "kenji": "🇯🇵 Giapponese",
+    "amelie": "🇫🇷 Francese"
+  }
+}

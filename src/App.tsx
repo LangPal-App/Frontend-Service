@@ -15,7 +15,6 @@ import PalForm from './pages/PalForm';
 import UpdateProfile from './pages/UpdateProfile';
 import UpdatePassword from './pages/UpdatePassword';
 import SetLanguage from './pages/SetLanguage';
-import { SUPPORTED_LANGUAGES } from './i18n/languages';
 
 export default function App() {
   const isDark = useAppSelector((state) => state.theme.isDark);

@@ -1,0 +1,33 @@
+{
+  "title": "Configurações",
+  "navLabel": "Configurações",
+  "profile": {
+    "nav": "Perfil",
+    "title": "Perfil",
+    "subtitle": "Atualize seu nome de exibição e foto de perfil.",
+    "you": "Você",
+    "photo": "Foto de perfil",
+    "displayName": "Nome de exibição",
+    "namePlaceholder": "Seu nome",
+    "nameRequired": "O nome é obrigatório.",
+    "error": "Não foi possível atualizar o perfil.",
+    "success": "Perfil atualizado com sucesso.",
+    "saving": "Salvando…",
+    "save": "Salvar perfil"
+  },
+  "password": {
+    "nav": "Senha",
+    "title": "Senha",
+    "subtitle": "Escolha uma senha forte com pelo menos 6 caracteres.",
+    "current": "Senha atual",
+    "new": "Nova senha",
+    "confirm": "Confirmar nova senha",
+    "currentRequired": "Digite sua senha atual.",
+    "minLength": "Deve ter pelo menos 6 caracteres.",
+    "mismatch": "As senhas não coincidem.",
+    "error": "Não foi possível atualizar a senha.",
+    "success": "Senha atualizada com sucesso.",
+    "updating": "Atualizando…",
+    "update": "Atualizar senha"
+  }
+}

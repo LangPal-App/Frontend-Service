@@ -1,0 +1,33 @@
+{
+  "title": "設定",
+  "navLabel": "設定",
+  "profile": {
+    "nav": "プロフィール",
+    "title": "プロフィール",
+    "subtitle": "表示名とプロフィール写真を更新します。",
+    "you": "あなた",
+    "photo": "プロフィール写真",
+    "displayName": "表示名",
+    "namePlaceholder": "お名前",
+    "nameRequired": "名前は必須です。",
+    "error": "プロフィールを更新できませんでした。",
+    "success": "プロフィールを更新しました。",
+    "saving": "保存中…",
+    "save": "プロフィールを保存"
+  },
+  "password": {
+    "nav": "パスワード",
+    "title": "パスワード",
+    "subtitle": "6 文字以上の強力なパスワードを設定してください。",
+    "current": "現在のパスワード",
+    "new": "新しいパスワード",
+    "confirm": "新しいパスワード（確認）",
+    "currentRequired": "現在のパスワードを入力してください。",
+    "minLength": "6 文字以上にしてください。",
+    "mismatch": "パスワードが一致しません。",
+    "error": "パスワードを更新できませんでした。",
+    "success": "パスワードを更新しました。",
+    "updating": "更新中…",
+    "update": "パスワードを更新"
+  }
+}

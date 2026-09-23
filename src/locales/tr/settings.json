@@ -1,0 +1,33 @@
+{
+  "title": "Ayarlar",
+  "navLabel": "Ayarlar",
+  "profile": {
+    "nav": "Profil",
+    "title": "Profil",
+    "subtitle": "Görünen adınızı ve profil fotoğrafınızı güncelleyin.",
+    "you": "Siz",
+    "photo": "Profil fotoğrafı",
+    "displayName": "Görünen ad",
+    "namePlaceholder": "Adınız",
+    "nameRequired": "Ad gereklidir.",
+    "error": "Profil güncellenemedi.",
+    "success": "Profil başarıyla güncellendi.",
+    "saving": "Kaydediliyor…",
+    "save": "Profili kaydet"
+  },
+  "password": {
+    "nav": "Şifre",
+    "title": "Şifre",
+    "subtitle": "En az 6 karakterden oluşan güçlü bir şifre seçin.",
+    "current": "Mevcut şifre",
+    "new": "Yeni şifre",
+    "confirm": "Yeni şifreyi onaylayın",
+    "currentRequired": "Mevcut şifrenizi girin.",
+    "minLength": "En az 6 karakter olmalıdır.",
+    "mismatch": "Şifreler eşleşmiyor.",
+    "error": "Şifre güncellenemedi.",
+    "success": "Şifre başarıyla güncellendi.",
+    "updating": "Güncelleniyor…",
+    "update": "Şifreyi güncelle"
+  }
+}

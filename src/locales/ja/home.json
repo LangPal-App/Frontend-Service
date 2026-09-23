@@ -1,0 +1,33 @@
+{
+  "logoAlt": "LangPal ロゴ",
+  "badge": "AI による語学練習",
+  "headlineBefore": "言語を学ぶなら",
+  "headlineHighlight": "リアルな会話",
+  "subtitle": "あなたの言語パルに出会いましょう — レベルに合わせ、会話を続け、自然な練習を実現する AI パートナーです。",
+  "ctaStart": "無料ではじめる",
+  "ctaAccount": "アカウントをお持ちの方",
+  "featuresTitle": "会話を続けるために必要なすべて",
+  "features": {
+    "practice": {
+      "title": "どんな言語でも練習",
+      "description": "目標言語、レベル、文化的背景に合わせた AI パルとチャットできます。"
+    },
+    "build": {
+      "title": "自分だけのパルを作成",
+      "description": "個性、訛り、教え方がユニークな会話パートナーを自由に作れます。"
+    },
+    "realtime": {
+      "title": "リアルタイム会話",
+      "description": "返答を即座にストリーミング — 待ち時間なし。自然なやり取りで学べます。"
+    }
+  },
+  "languagesLabel": "どんな言語でも練習",
+  "languagesMore": "+ その他多数",
+  "footerTagline": "© {{year}} LangPal. 会話を、シンプルに。",
+  "footerCta": "無料アカウントを作成",
+  "demoPals": {
+    "sofia": "🇪🇸 スペイン語",
+    "kenji": "🇯🇵 日本語",
+    "amelie": "🇫🇷 フランス語"
+  }
+}

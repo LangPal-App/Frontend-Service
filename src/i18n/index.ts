@@ -3,21 +3,25 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import { SUPPORTED_LANGUAGES } from './languages';
 
-import enCommon from '../locales/en/common.json';
-import enHome from '../locales/en/home.json';
-import enAuth from '../locales/en/auth.json';
-import enPals from '../locales/en/pals.json';
-import enChat from '../locales/en/chat.json';
-import enSettings from '../locales/en/settings.json';
-
-import arCommon from '../locales/ar/common.json';
-import arHome from '../locales/ar/home.json';
-import arAuth from '../locales/ar/auth.json';
-import arPals from '../locales/ar/pals.json';
-import arChat from '../locales/ar/chat.json';
-import arSettings from '../locales/ar/settings.json';
-
 const namespaces = ['common', 'home', 'auth', 'pals', 'chat', 'settings'] as const;
+
+type LocaleModule = { default: Record<string, unknown> };
+
+const localeModules = import.meta.glob<LocaleModule>('../locales/*/*.json', { eager: true });
+
+function buildResources() {
+  const resources: Record<string, Record<string, Record<string, unknown>>> = {};
+
+  for (const [path, mod] of Object.entries(localeModules)) {
+    const match = path.match(/\/locales\/([^/]+)\/([^/]+)\.json$/);
+    if (!match) continue;
+    const [, lng, ns] = match;
+    if (!resources[lng]) resources[lng] = {};
+    resources[lng][ns] = mod.default;
+  }
+
+  return resources;
+}
 
 function applyDocumentMeta(language: string) {
   const dir = i18n.t('dir', { lng: language, ns: 'common' });
@@ -29,24 +33,7 @@ void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources: {
-      en: {
-        common: enCommon,
-        home: enHome,
-        auth: enAuth,
-        pals: enPals,
-        chat: enChat,
-        settings: enSettings,
-      },
-      ar: {
-        common: arCommon,
-        home: arHome,
-        auth: arAuth,
-        pals: arPals,
-        chat: arChat,
-        settings: arSettings,
-      },
-    },
+    resources: buildResources(),
     supportedLngs: [...SUPPORTED_LANGUAGES],
     fallbackLng: 'en',
     defaultNS: 'common',

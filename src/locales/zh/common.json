@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
+    "main": "主页",
     "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "settings": "设置",
+    "logIn": "登录",
+    "getStarted": "开始使用"
   },
   "languages": {
     "en": "English",
@@ -24,14 +24,14 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "选择语言",
+  "close": "关闭",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "切换颜色主题"
   },
   "back": {
-    "home": "Home",
-    "chat": "Chat",
+    "home": "主页",
+    "chat": "聊天",
     "pals": "Pals"
   }
 }

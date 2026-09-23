@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../app/hooks';
-import { getAlternateLanguage } from '../i18n/languages';
+import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
 
 function navLinkClass(isActive: boolean) {
@@ -13,9 +13,8 @@ function navLinkClass(isActive: boolean) {
 }
 
 export default function Header() {
-  const { t, i18n } = useTranslation('common');
+  const { t } = useTranslation('common');
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  const nextLanguage = getAlternateLanguage(i18n.language);
 
   return (
     <header className="sticky top-0 z-20 shrink-0 bg-warm-50/90 dark:bg-dark-900/90 backdrop-blur-md border-b border-warm-200 dark:border-dark-700">
@@ -31,12 +30,7 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <Link
-            to={`/${nextLanguage}`}
-            className="px-3 py-2 rounded-xl text-sm font-semibold text-warm-700 dark:text-dark-200 hover:bg-warm-100 dark:hover:bg-dark-800 transition"
-          >
-            {t(`languages.${nextLanguage}`)}
-          </Link>
+          <LanguageSwitcher />
           <ThemeToggle />
           {isAuthenticated ? (
             <nav className="flex items-center gap-1" aria-label={t('nav.main')}>

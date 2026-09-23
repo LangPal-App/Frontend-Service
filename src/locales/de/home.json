@@ -1,0 +1,33 @@
+{
+  "logoAlt": "LangPal-Logo",
+  "badge": "KI-gestütztes Sprachtraining",
+  "headlineBefore": "Sprachen lernen durch",
+  "headlineHighlight": "echte Gespräche",
+  "subtitle": "Lerne deine Sprach-Pals kennen — KI-Partner, die sich an dein Niveau anpassen, dich im Gespräch halten und Üben natürlich machen.",
+  "ctaStart": "Kostenlos starten",
+  "ctaAccount": "Ich habe ein Konto",
+  "featuresTitle": "Alles, was du brauchst, um weiterzureden",
+  "features": {
+    "practice": {
+      "title": "Jede Sprache üben",
+      "description": "Chatte mit KI-Pals, die auf deine Zielsprache, dein Niveau und deinen kulturellen Kontext zugeschnitten sind."
+    },
+    "build": {
+      "title": "Eigene Pals erstellen",
+      "description": "Erstelle individuelle Gesprächspartner mit einzigartigen Persönlichkeiten, Akzenten und Lehrstilen."
+    },
+    "realtime": {
+      "title": "Echtzeit-Gespräche",
+      "description": "Antworten werden sofort gestreamt — kein Warten. Lerne durch natürlichen Dialog hin und her."
+    }
+  },
+  "languagesLabel": "In jeder Sprache üben",
+  "languagesMore": "+ viele weitere",
+  "footerTagline": "© {{year}} LangPal. Gespräche, unkompliziert.",
+  "footerCta": "Kostenloses Konto erstellen",
+  "demoPals": {
+    "sofia": "🇪🇸 Spanisch",
+    "kenji": "🇯🇵 Japanisch",
+    "amelie": "🇫🇷 Französisch"
+  }
+}

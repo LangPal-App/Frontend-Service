@@ -10,8 +10,22 @@
   },
   "languages": {
     "en": "English",
-    "ar": "العربية"
+    "ar": "العربية",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "it": "Italiano",
+    "pt": "Português",
+    "ja": "日本語",
+    "ko": "한국어",
+    "zh": "中文",
+    "ru": "Русский",
+    "nl": "Nederlands",
+    "tr": "Türkçe",
+    "hi": "हिन्दी"
   },
+  "chooseLanguage": "اختر اللغة",
+  "close": "إغلاق",
   "theme": {
     "toggle": "تبديل المظهر"
   },

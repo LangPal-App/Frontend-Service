@@ -1,0 +1,33 @@
+{
+  "title": "설정",
+  "navLabel": "설정",
+  "profile": {
+    "nav": "프로필",
+    "title": "프로필",
+    "subtitle": "표시 이름과 프로필 사진을 업데이트하세요.",
+    "you": "나",
+    "photo": "프로필 사진",
+    "displayName": "표시 이름",
+    "namePlaceholder": "이름",
+    "nameRequired": "이름은 필수입니다.",
+    "error": "프로필을 업데이트할 수 없습니다.",
+    "success": "프로필이 성공적으로 업데이트되었습니다.",
+    "saving": "저장 중…",
+    "save": "프로필 저장"
+  },
+  "password": {
+    "nav": "비밀번호",
+    "title": "비밀번호",
+    "subtitle": "6자 이상의 강력한 비밀번호를 선택하세요.",
+    "current": "현재 비밀번호",
+    "new": "새 비밀번호",
+    "confirm": "새 비밀번호 확인",
+    "currentRequired": "현재 비밀번호를 입력하세요.",
+    "minLength": "6자 이상이어야 합니다.",
+    "mismatch": "비밀번호가 일치하지 않습니다.",
+    "error": "비밀번호를 업데이트할 수 없습니다.",
+    "success": "비밀번호가 성공적으로 업데이트되었습니다.",
+    "updating": "업데이트 중…",
+    "update": "비밀번호 업데이트"
+  }
+}

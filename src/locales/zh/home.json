@@ -1,0 +1,33 @@
+{
+  "logoAlt": "LangPal 标志",
+  "badge": "AI 驱动的语言练习",
+  "headlineBefore": "通过真实对话",
+  "headlineHighlight": "学习语言",
+  "subtitle": "认识你的语言伙伴 — AI 搭档会根据你的水平引导对话，让练习自然流畅。",
+  "ctaStart": "免费开始",
+  "ctaAccount": "已有账户",
+  "featuresTitle": "持续对话所需的一切",
+  "features": {
+    "practice": {
+      "title": "练习任何语言",
+      "description": "与根据目标语言、水平和文化背景量身定制的 AI 伙伴聊天。"
+    },
+    "build": {
+      "title": "创建专属伙伴",
+      "description": "打造具有独特个性、口音和教学风格的定制对话伙伴。"
+    },
+    "realtime": {
+      "title": "实时对话",
+      "description": "即时流式回复 — 无需等待，通过自然的来回对话学习。"
+    }
+  },
+  "languagesLabel": "练习任何语言",
+  "languagesMore": "+ 更多语言",
+  "footerTagline": "© {{year}} LangPal. 简洁的对话体验。",
+  "footerCta": "创建免费账户",
+  "demoPals": {
+    "sofia": "🇪🇸 西班牙语",
+    "kenji": "🇯🇵 日语",
+    "amelie": "🇫🇷 法语"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "logoAlt": "LangPal-logo",
+  "badge": "Taaloefening met AI",
+  "headlineBefore": "Leer talen door",
+  "headlineHighlight": "echte gesprekken",
+  "subtitle": "Ontmoet je taalpals — AI-partners die zich aanpassen aan jouw niveau, je aan het praten houden en oefenen natuurlijk laten voelen.",
+  "ctaStart": "Gratis beginnen",
+  "ctaAccount": "Ik heb een account",
+  "featuresTitle": "Alles wat je nodig hebt om te blijven praten",
+  "features": {
+    "practice": {
+      "title": "Oefen elke taal",
+      "description": "Chat met AI-pals afgestemd op jouw doeltaal, niveau en culturele context."
+    },
+    "build": {
+      "title": "Maak je eigen pals",
+      "description": "Creëer aangepaste gesprekspartners met unieke persoonlijkheden, accenten en leerstijlen."
+    },
+    "realtime": {
+      "title": "Gesprekken in realtime",
+      "description": "Stream antwoorden direct — geen wachten. Leer door natuurlijke heen-en-weer dialogen."
+    }
+  },
+  "languagesLabel": "Oefen in elke taal",
+  "languagesMore": "+ nog veel meer",
+  "footerTagline": "© {{year}} LangPal. Gesprek, zonder ruis.",
+  "footerCta": "Maak je gratis account aan",
+  "demoPals": {
+    "sofia": "🇪🇸 Spaans",
+    "kenji": "🇯🇵 Japans",
+    "amelie": "🇫🇷 Frans"
+  }
+}

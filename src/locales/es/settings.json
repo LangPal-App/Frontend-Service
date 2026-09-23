@@ -1,0 +1,33 @@
+{
+  "title": "Ajustes",
+  "navLabel": "Ajustes",
+  "profile": {
+    "nav": "Perfil",
+    "title": "Perfil",
+    "subtitle": "Actualiza tu nombre visible y foto de perfil.",
+    "you": "Tú",
+    "photo": "Foto de perfil",
+    "displayName": "Nombre visible",
+    "namePlaceholder": "Tu nombre",
+    "nameRequired": "El nombre es obligatorio.",
+    "error": "No se pudo actualizar el perfil.",
+    "success": "Perfil actualizado correctamente.",
+    "saving": "Guardando…",
+    "save": "Guardar perfil"
+  },
+  "password": {
+    "nav": "Contraseña",
+    "title": "Contraseña",
+    "subtitle": "Elige una contraseña segura de al menos 6 caracteres.",
+    "current": "Contraseña actual",
+    "new": "Nueva contraseña",
+    "confirm": "Confirmar nueva contraseña",
+    "currentRequired": "Introduce tu contraseña actual.",
+    "minLength": "Debe tener al menos 6 caracteres.",
+    "mismatch": "Las contraseñas no coinciden.",
+    "error": "No se pudo actualizar la contraseña.",
+    "success": "Contraseña actualizada correctamente.",
+    "updating": "Actualizando…",
+    "update": "Actualizar contraseña"
+  }
+}

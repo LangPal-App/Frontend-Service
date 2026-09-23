@@ -2,11 +2,11 @@
   "dir": "ltr",
   "brand": "LangPal",
   "nav": {
-    "main": "Main",
+    "main": "메인",
     "pals": "Pals",
-    "settings": "Settings",
-    "logIn": "Log in",
-    "getStarted": "Get started"
+    "settings": "설정",
+    "logIn": "로그인",
+    "getStarted": "시작하기"
   },
   "languages": {
     "en": "English",
@@ -24,14 +24,14 @@
     "tr": "Türkçe",
     "hi": "हिन्दी"
   },
-  "chooseLanguage": "Choose language",
-  "close": "Close",
+  "chooseLanguage": "언어 선택",
+  "close": "닫기",
   "theme": {
-    "toggle": "Toggle color theme"
+    "toggle": "색상 테마 전환"
   },
   "back": {
-    "home": "Home",
-    "chat": "Chat",
+    "home": "홈",
+    "chat": "채팅",
     "pals": "Pals"
   }
 }

@@ -1,0 +1,33 @@
+{
+  "title": "Impostazioni",
+  "navLabel": "Impostazioni",
+  "profile": {
+    "nav": "Profilo",
+    "title": "Profilo",
+    "subtitle": "Aggiorna il tuo nome visualizzato e la foto del profilo.",
+    "you": "Tu",
+    "photo": "Foto del profilo",
+    "displayName": "Nome visualizzato",
+    "namePlaceholder": "Il tuo nome",
+    "nameRequired": "Il nome è obbligatorio.",
+    "error": "Impossibile aggiornare il profilo.",
+    "success": "Profilo aggiornato con successo.",
+    "saving": "Salvataggio…",
+    "save": "Salva profilo"
+  },
+  "password": {
+    "nav": "Password",
+    "title": "Password",
+    "subtitle": "Scegli una password sicura con almeno 6 caratteri.",
+    "current": "Password attuale",
+    "new": "Nuova password",
+    "confirm": "Conferma nuova password",
+    "currentRequired": "Inserisci la tua password attuale.",
+    "minLength": "Deve contenere almeno 6 caratteri.",
+    "mismatch": "Le password non corrispondono.",
+    "error": "Impossibile aggiornare la password.",
+    "success": "Password aggiornata con successo.",
+    "updating": "Aggiornamento…",
+    "update": "Aggiorna password"
+  }
+}

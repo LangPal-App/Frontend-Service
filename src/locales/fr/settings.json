@@ -1,0 +1,33 @@
+{
+  "title": "Paramètres",
+  "navLabel": "Paramètres",
+  "profile": {
+    "nav": "Profil",
+    "title": "Profil",
+    "subtitle": "Mettez à jour votre nom d'affichage et votre photo de profil.",
+    "you": "Vous",
+    "photo": "Photo de profil",
+    "displayName": "Nom d'affichage",
+    "namePlaceholder": "Votre nom",
+    "nameRequired": "Le nom est obligatoire.",
+    "error": "Impossible de mettre à jour le profil.",
+    "success": "Profil mis à jour avec succès.",
+    "saving": "Enregistrement…",
+    "save": "Enregistrer le profil"
+  },
+  "password": {
+    "nav": "Mot de passe",
+    "title": "Mot de passe",
+    "subtitle": "Choisissez un mot de passe fort d'au moins 6 caractères.",
+    "current": "Mot de passe actuel",
+    "new": "Nouveau mot de passe",
+    "confirm": "Confirmer le nouveau mot de passe",
+    "currentRequired": "Saisissez votre mot de passe actuel.",
+    "minLength": "Doit contenir au moins 6 caractères.",
+    "mismatch": "Les mots de passe ne correspondent pas.",
+    "error": "Impossible de mettre à jour le mot de passe.",
+    "success": "Mot de passe mis à jour avec succès.",
+    "updating": "Mise à jour…",
+    "update": "Mettre à jour le mot de passe"
+  }
+}
